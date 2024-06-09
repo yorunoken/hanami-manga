@@ -118,8 +118,8 @@
 								Page {currentPage}/{Math.ceil(chapterData.total / chaptersPerPage)}
 							</h2>
 						</div>
-						<div class="flex justify-between">
-							<ul class="space-y-2">
+						<div class="flex justify-between rounded-md border">
+							<ul class="mr-3 space-y-2 p-2">
 								{#each chapterData.data.slice(0, 20) as chapter}
 									<li>
 										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
@@ -129,7 +129,7 @@
 									</li>
 								{/each}
 							</ul>
-							<ul class="space-y-2">
+							<ul class="ml-3 space-y-2 p-2">
 								{#each chapterData.data.slice(20, 40) as chapter}
 									<li>
 										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
