@@ -3,20 +3,45 @@
 	import { page } from "$app/stores";
 	import Footer from "components/footer.svelte";
 	import Header from "components/header.svelte";
+	import LeftButton from "components/chevronLeftIcon.svelte";
+	import RightButton from "components/chevronRightIcon.svelte";
 	import SvelteMarkdown from "svelte-markdown";
+	import Pagination from "components/chapterPagePagination.svelte";
 	import { onMount } from "svelte";
 
 	const uuid = $page.params.uuid;
+	const chaptersPerPage = 40;
 
 	let mangaData: MangaResponse;
 	let chapterData: MangaChapter;
+	let currentPage = 1;
+	let dummyChapters = Array.from({ length: chaptersPerPage }, (_, i) => 1 + i);
 
-	onMount(async () => {
+	async function fetchData() {
 		mangaData = await getJSON(`manga/${uuid}?includes[]=cover_art`);
 		chapterData = await getJSON(
-			`chapter?manga=${uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=100`
+			`chapter?manga=${uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(currentPage - 1) * chaptersPerPage}`
 		);
+	}
+
+	onMount(async () => {
+		await fetchData();
 	});
+
+	function incrementPage() {
+		currentPage++;
+		fetchData();
+	}
+
+	function decrementPage() {
+		currentPage--;
+		fetchData();
+	}
+
+	function setPage(pageNumber: number) {
+		currentPage = pageNumber;
+		fetchData();
+	}
 </script>
 
 <div class="flex min-h-[100dvh] flex-col">
@@ -24,7 +49,39 @@
 	<main class="flex-1 bg-gray-100 px-4 py-6 md:px-6 md:py-12 dark:bg-gray-900">
 		<div class="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
 			{#if !mangaData || !chapterData}
-				<p>waiting</p>
+				<div>
+					<img width={400} height={500} alt="Manga Cover" class="rounded-md shadow-lg" />
+				</div>
+				<div>
+					<h1 class="mb-2 text-3xl font-bold">Yomi Yori</h1>
+					<div class="mb-4 flex flex-wrap gap-2">
+						<div class="bg-primary-500 rounded-md border px-3 py-1 text-sm text-white">Yuri</div>
+					</div>
+					<p class="mb-6 text-gray-700 dark:text-gray-400">Yuri girls mm</p>
+					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
+						<h2 class="mb-4 text-xl font-bold">Chapters</h2>
+						<div class="flex justify-between">
+							<ul class="space-y-2">
+								{#each dummyChapters.slice(0, 20) as chapter}
+									<li>
+										<p class="text-primary-500 hover:underline">
+											Chapter {chapter}
+										</p>
+									</li>
+								{/each}
+							</ul>
+							<ul class="space-y-2">
+								{#each dummyChapters.slice(20, 40) as chapter}
+									<li>
+										<p class="text-primary-500 hover:underline">
+											Chapter {chapter}
+										</p>
+									</li>
+								{/each}
+							</ul>
+						</div>
+					</div>
+				</div>
 			{:else}
 				<div>
 					<img
@@ -55,17 +112,43 @@
 						/>
 					</p>
 					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
-						<h2 class="mb-4 text-xl font-bold">Chapters</h2>
-						<ul class="space-y-2">
-							{#each chapterData.data as chapter}
-								<li>
-									<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
-										Chapter {chapter.attributes.chapter}
-										{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
-									</a>
-								</li>
-							{/each}
-						</ul>
+						<div class="flex justify-between">
+							<h2 class="mb-4 text-xl font-bold">Chapters</h2>
+							<h2 class="mb-4 text-base">
+								Page {currentPage}/{Math.ceil(chapterData.total / chaptersPerPage)}
+							</h2>
+						</div>
+						<div class="flex justify-between">
+							<ul class="space-y-2">
+								{#each chapterData.data.slice(0, 20) as chapter}
+									<li>
+										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
+											Chapter {chapter.attributes.chapter}
+											{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
+										</a>
+									</li>
+								{/each}
+							</ul>
+							<ul class="space-y-2">
+								{#each chapterData.data.slice(20, 40) as chapter}
+									<li>
+										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
+											Chapter {chapter.attributes.chapter}
+											{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						</div>
+					</div>
+					<div class="mt-4 flex items-center justify-center space-x-2">
+						{#if currentPage > 1}
+							<LeftButton on:click={decrementPage} />
+						{/if}
+						<Pagination {currentPage} totalChapters={chapterData.total} {setPage} />
+						{#if currentPage < Math.ceil(chapterData.total / chaptersPerPage)}
+							<RightButton on:click={incrementPage} />
+						{/if}
 					</div>
 				</div>
 			{/if}
