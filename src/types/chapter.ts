@@ -66,3 +66,21 @@ interface ChapterImageData {
 		dataSaver: Array<string>;
 	};
 }
+
+interface AggregateChapter {
+	result: "ok" | "error";
+	volumes: {
+		[key: string]: {
+			volume: string;
+			count: number;
+			chapters: {
+				[key: string]: {
+					chapter: string;
+					id: string;
+					others: Array<string>;
+					count: number;
+				};
+			};
+		};
+	};
+}
