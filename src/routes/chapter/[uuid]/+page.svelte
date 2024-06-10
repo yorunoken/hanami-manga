@@ -69,7 +69,7 @@
 				<div class={`flex ${fitHeight ? "h-screen" : "w-screen"} my-2 items-center justify-center`}>
 					<img
 						alt="Loading..."
-						src={`${chapterImagesData.baseUrl}/data/${chapterImagesData.chapter.hash}/${imageData}`}
+						src={`http://localhost:8080/api/proxy-image?url=${chapterImagesData.baseUrl}/data/${chapterImagesData.chapter.hash}/${imageData}`}
 						class={`${fitHeight ? "max-h-full" : "max-w-full"} object-contain`}
 					/>
 				</div>
