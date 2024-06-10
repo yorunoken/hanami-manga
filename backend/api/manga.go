@@ -31,3 +31,32 @@ func GetManga(c *gin.Context) {
 
 	c.JSON(http.StatusOK, mangaData)
 }
+
+func MangaAggregate(c *gin.Context) {
+	url := "https://api.mangadex.org/manga"
+
+	uuid := c.Param("uuid")
+	params := c.Request.URL.Query()
+
+	if uuid != "" {
+		url = url + "/" + uuid
+	}
+
+	url = url + "/aggregate"
+
+	if params.Encode() != "" {
+		url = url + "?" + params.Encode()
+	}
+
+	fmt.Println(url)
+	mangaData, err := utils.GET(url)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": fmt.Sprintf("Bad request. %s", err),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, mangaData)
+}

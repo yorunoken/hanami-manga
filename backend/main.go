@@ -15,6 +15,8 @@ func main() {
 
 		api.GET("/manga", gg.GetManga)
 		api.GET("/manga/:uuid", gg.GetManga)
+		api.GET("/manga/:uuid/aggregate", gg.MangaAggregate)
+
 		api.GET("/chapter", gg.GetChapter)
 		api.GET("/chapter/:uuid", gg.GetChapter)
 
