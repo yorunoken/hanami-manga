@@ -13,7 +13,7 @@
 	const chaptersPerPage = 40;
 
 	let mangaData: MangaResponse;
-	let chapterData: MangaChapter;
+	let chapterData: MangaChapterSearch;
 	let currentPage = 1;
 	let dummyChapters = Array.from({ length: chaptersPerPage }, (_, i) => 1 + i);
 
