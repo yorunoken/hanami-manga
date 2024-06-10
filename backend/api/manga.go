@@ -20,7 +20,7 @@ func GetManga(c *gin.Context) {
 
 	url = url + "?" + params.Encode()
 
-	mangaData, err := utils.GET(url)
+	data, err := utils.GETJson(url)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -29,7 +29,7 @@ func GetManga(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, mangaData)
+	c.JSON(http.StatusOK, data)
 }
 
 func MangaAggregate(c *gin.Context) {
@@ -49,7 +49,7 @@ func MangaAggregate(c *gin.Context) {
 	}
 
 	fmt.Println(url)
-	mangaData, err := utils.GET(url)
+	data, err := utils.GETJson(url)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -58,5 +58,5 @@ func MangaAggregate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, mangaData)
+	c.JSON(http.StatusOK, data)
 }
