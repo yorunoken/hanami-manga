@@ -6,6 +6,21 @@
 	export let data;
 </script>
 
+<header>
+	<title
+		>hanamimanga | {data.manga.chapter.data.relationships.find(
+			(relationship) => relationship.type === "manga"
+		)?.attributes.title.en ??
+			data.manga.chapter.data.relationships
+				.find((relationship) => relationship.type === "manga")
+				?.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
+				?.attributes.title["ja-ro"] ??
+			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
+				?.attributes.title["ja"]}</title
+	>
+</header>
+
 <div class="flex min-h-screen flex-col bg-gray-950 text-white">
 	<Header />
 	<div class="border-b bg-gray-900 px-6 py-4 text-center">
