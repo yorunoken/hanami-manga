@@ -1,7 +1,6 @@
-import { error, json } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
 
 export async function GET({ url }) {
-	// return json({ gg: "hioi" });
 	const imageUrl = url.searchParams.get("url");
 	if (imageUrl === null) {
 		error(400, "please pass in the `url` parameter to proxy an image.");

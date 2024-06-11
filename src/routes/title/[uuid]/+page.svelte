@@ -9,19 +9,20 @@
 	import Pagination from "components/chapterPagePagination.svelte";
 	import { onMount } from "svelte";
 
+	export let data;
+
 	const uuid = $page.params.uuid;
 	const chaptersPerPage = 40;
 
-	let mangaData: MangaResponse;
 	let chapterData: MangaChapterSearch;
+
 	let currentPage = 1;
 	let dummyChapters = Array.from({ length: chaptersPerPage }, (_, i) => 1 + i);
 
 	async function fetchData() {
-		mangaData = await getJSON(`manga/${uuid}?includes[]=cover_art`);
-		chapterData = await getJSON(
-			`chapter?manga=${uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(currentPage - 1) * chaptersPerPage}`
-		);
+		chapterData = await fetch(
+			`/api/proxy-chapter?manga=${uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(currentPage - 1) * chaptersPerPage}`
+		).then((res) => res.json());
 	}
 
 	onMount(async () => {
@@ -48,7 +49,7 @@
 	<Header />
 	<main class="flex-1 bg-gray-100 px-4 py-6 md:px-6 md:py-12 dark:bg-gray-900">
 		<div class="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
-			{#if !mangaData || !chapterData}
+			{#if !data.manga || !chapterData}
 				<div>
 					<img width={400} height={500} alt="Manga Cover" class="rounded-md shadow-lg" />
 				</div>
@@ -85,7 +86,7 @@
 			{:else}
 				<div>
 					<img
-						src={`/api/proxy-image?url=https://mangadex.org/covers/${mangaData.data.id}/${mangaData.data.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
+						src={`/api/proxy-image?url=https://mangadex.org/covers/${data.manga.data.id}/${data.manga.data.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
 						width={400}
 						height={500}
 						alt="Manga Cover"
@@ -94,13 +95,13 @@
 				</div>
 				<div>
 					<h1 class="mb-2 text-3xl font-bold">
-						{mangaData.data.attributes.title.en ??
-							mangaData.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
-							mangaData.data.attributes.title["ja-ro"] ??
-							mangaData.data.attributes.title["ja"]}
+						{data.manga.data.attributes.title.en ??
+							data.manga.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+							data.manga.data.attributes.title["ja-ro"] ??
+							data.manga.data.attributes.title["ja"]}
 					</h1>
 					<div class="mb-4 flex flex-wrap gap-2">
-						{#each mangaData.data.attributes.tags as tag}
+						{#each data.manga.data.attributes.tags as tag}
 							<div class="bg-primary-500 rounded-md border px-3 py-1 text-sm text-white">
 								{tag.attributes.name.en}
 							</div>
@@ -108,7 +109,7 @@
 					</div>
 					<p class="mb-6 text-gray-700 dark:text-gray-400">
 						<SvelteMarkdown
-							source={mangaData.data.attributes.description.en ?? "No description was provided."}
+							source={data.manga.data.attributes.description.en ?? "No description was provided."}
 						/>
 					</p>
 					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
