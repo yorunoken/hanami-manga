@@ -7,6 +7,12 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>hanamimanga | Top Rated</title>
+	<meta name="description" content="Dive into exciting new anime!" />
+	<meta name="keywords" content="manga, manga reader, hanamimanga, hanami, top rated" />
+</svelte:head>
+
 <div class="flex min-h-screen flex-col">
 	<Header />
 	<main class="flex-1 bg-gray-100 px-6 py-10 md:px-10 dark:bg-gray-900">

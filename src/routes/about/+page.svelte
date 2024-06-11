@@ -3,6 +3,12 @@
 	import Footer from "components/footer.svelte";
 </script>
 
+<svelte:head>
+	<title>hanamimanga | About</title>
+	<meta name="description" content="About us." />
+	<meta name="keywords" content="manga, manga reader, hanamimanga, about" />
+</svelte:head>
+
 <Header />
 <main class="flex min-h-screen justify-center bg-gray-900">
 	<div class="container mx-auto px-4 py-10 text-white md:px-0">

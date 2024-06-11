@@ -23,6 +23,30 @@
 			? " - " + data.manga.chapter.data.attributes.title
 			: ""}
 	</title>
+
+	<meta
+		name="description"
+		content={data.manga.info.data.attributes.description.en ?? "No description was provided."}
+	/>
+	<meta
+		name="keywords"
+		content={`manga, manga reader, hanamimanga, hanami, ${
+			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
+				?.attributes.title.en ??
+			data.manga.chapter.data.relationships
+				.find((relationship) => relationship.type === "manga")
+				?.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
+				?.attributes.title["ja-ro"] ??
+			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
+				?.attributes.title["ja"]
+		} ${data.manga.chapter.data.attributes.chapter}
+				${
+					data.manga.chapter.data.attributes.title
+						? " - " + data.manga.chapter.data.attributes.title
+						: ""
+				}`}
+	/>
 </svelte:head>
 
 <div class="flex min-h-screen flex-col bg-gray-950 text-white">
@@ -52,21 +76,6 @@
 					: ""}
 			</p>
 		</div>
-		<!-- <div class="text-2xl font-bold">
-			{data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
-				?.attributes.title.en ??
-				data.manga.chapter.data.relationships
-					.find((relationship) => relationship.type === "manga")
-					?.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
-				data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
-					?.attributes.title["ja-ro"] ??
-				data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
-					?.attributes.title["ja"]}
-			{data.manga.chapter.data.attributes.chapter}
-			{data.manga.chapter.data.attributes.title
-				? " - " + data.manga.chapter.data.attributes.title
-				: ""}
-		</div> -->
 	</div>
 	<div class="flex-1 overflow-y-auto bg-gray-900 text-center">
 		{#each data.manga.pageImages.chapter.data as imageData}

@@ -8,6 +8,8 @@
 
 <svelte:head>
 	<title>hanamimanga | Home</title>
+	<meta name="description" content="Dive into exciting new manga!" />
+	<meta name="keywords" content="manga, manga reader, hanamimanga, hanami" />
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">

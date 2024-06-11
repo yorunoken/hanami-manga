@@ -52,6 +52,19 @@
 			data.manga.data.attributes.title["ja-ro"] ??
 			data.manga.data.attributes.title["ja"]}</title
 	>
+	<meta
+		name="description"
+		content={data.manga.data.attributes.description.en ?? "No description was provided."}
+	/>
+	<meta
+		name="keywords"
+		content={`manga, manga reader, hanamimanga, hanami, ${
+			data.manga.data.attributes.title.en ??
+			data.manga.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+			data.manga.data.attributes.title["ja-ro"] ??
+			data.manga.data.attributes.title["ja"]
+		}`}
+	/>
 </svelte:head>
 
 <div class="flex min-h-[100dvh] flex-col">
