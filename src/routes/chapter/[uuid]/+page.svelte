@@ -2,7 +2,7 @@
 	import Header from "components/header.svelte";
 	import BackButton from "components/backButton.svelte";
 
-	let fitHeight = true;
+	// let fitHeight = true;
 
 	export let data;
 </script>
@@ -49,45 +49,48 @@
 	/>
 </svelte:head>
 
-<div class="flex min-h-screen flex-col bg-gray-950 text-white">
+<div class="flex min-h-screen flex-col">
 	<Header />
-	<div class="flex items-center justify-center border-b bg-gray-900 px-6 py-4 text-center">
-		<a href={`/title/${data.manga.info.data.id}`} class="mr-8">
-			<BackButton />
-		</a>
-		<div>
-			<h1 class="text-2xl font-bold">
-				{data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
-					?.attributes.title.en ??
-					data.manga.chapter.data.relationships
-						.find((relationship) => relationship.type === "manga")
-						?.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
-					data.manga.chapter.data.relationships.find(
-						(relationship) => relationship.type === "manga"
-					)?.attributes.title["ja-ro"] ??
-					data.manga.chapter.data.relationships.find(
-						(relationship) => relationship.type === "manga"
-					)?.attributes.title["ja"]}
-			</h1>
-			<p class="text-gray-500 dark:text-gray-400">
-				Chapter {data.manga.chapter.data.attributes.chapter}
-				{data.manga.chapter.data.attributes.title
-					? " - " + data.manga.chapter.data.attributes.title
-					: ""}
-			</p>
+	<main class="flex-1 bg-gray-100 dark:bg-gray-900">
+		<div class="mx-auto flex justify-center p-6">
+			<div class="mb-4 flex items-center">
+				<a href={`/title/${data.manga.info.data.id}`} class="mr-8">
+					<BackButton />
+				</a>
+				<div>
+					<h1 class="text-2xl font-bold">
+						{data.manga.chapter.data.relationships.find(
+							(relationship) => relationship.type === "manga"
+						)?.attributes.title.en ??
+							data.manga.chapter.data.relationships
+								.find((relationship) => relationship.type === "manga")
+								?.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+							data.manga.chapter.data.relationships.find(
+								(relationship) => relationship.type === "manga"
+							)?.attributes.title[" ja-ro"] ??
+							data.manga.chapter.data.relationships.find(
+								(relationship) => relationship.type === "manga"
+							)?.attributes.title["ja"]}
+					</h1>
+					<p class="text-gray-500 dark:text-gray-400">
+						Chapter {data.manga.chapter.data.attributes.chapter}
+						{data.manga.chapter.data.attributes.title
+							? " - " + data.manga.chapter.data.attributes.title
+							: ""}
+					</p>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div class="flex-1 overflow-y-auto bg-gray-900 text-center">
 		{#each data.manga.pageImages.chapter.data as imageData}
-			<div class={`flex ${fitHeight ? "h-screen" : "w-screen"} my-2 items-center justify-center`}>
+			<div class="manga-image mx-auto rounded-lg bg-white py-1 shadow-md dark:bg-gray-900">
 				<img
 					alt="Loading..."
 					src={`/api/proxy-image?url=${data.manga.pageImages.baseUrl}/data/${data.manga.pageImages.chapter.hash}/${imageData}`}
-					class={`${fitHeight ? "max-h-full" : "max-w-full"} object-contain`}
+					class="h-auto w-full"
 				/>
 			</div>
 		{/each}
-		<div class="flex justify-between">
+		<div class="flex justify-between text-center">
 			{#if !data.nextChapterId}
 				<a
 					href={`/title/${data.manga.info.data.id}`}
@@ -104,5 +107,25 @@
 				</a>
 			{/if}
 		</div>
-	</div>
+	</main>
 </div>
+
+<style>
+	@media (min-width: 640px) {
+		.manga-image {
+			max-width: 100%;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.manga-image {
+			max-width: 75%;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.manga-image {
+			max-width: 50%;
+		}
+	}
+</style>
