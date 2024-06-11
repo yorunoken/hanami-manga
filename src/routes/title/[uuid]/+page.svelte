@@ -85,7 +85,7 @@
 			{:else}
 				<div>
 					<img
-						src={`http://localhost:8080/api/proxy-image?url=https://mangadex.org/covers/${mangaData.data.id}/${mangaData.data.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
+						src={`/api/proxy-image?url=https://mangadex.org/covers/${mangaData.data.id}/${mangaData.data.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
 						width={400}
 						height={500}
 						alt="Manga Cover"

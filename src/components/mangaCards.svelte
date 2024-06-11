@@ -19,7 +19,7 @@
 				href={`/title/${manga.id}`}
 			>
 				<img
-					src={`http://localhost:8080/api/proxy-image?url=https://mangadex.org/covers/${manga.id}/${manga.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
+					src={`/api/proxy-image?url=https://mangadex.org/covers/${manga.id}/${manga.relationships.find((relationship) => relationship.type === "cover_art")?.attributes.fileName}`}
 					alt="Manga Cover"
 					width="150"
 					height="225"
