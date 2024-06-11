@@ -2,20 +2,9 @@
 	import Header from "components/header.svelte";
 	import Footer from "components/footer.svelte";
 	import Pagination from "components/pagination.svelte";
-
-	import { page } from "$app/stores";
 	import MangaCards from "components/mangaCards.svelte";
-	import { getJSON } from "utils/request";
 
-	let currentPage: number;
-	$: currentPage = parseInt($page.url.searchParams.get("page") ?? "") || 1;
-
-	const mangasLimit = 20;
-
-	let topRatedMangaData: Promise<MangaSearchResponse>;
-	$: topRatedMangaData = getJSON(
-		`manga?includes[]=cover_art&order[followedCount]=desc&limit=${mangasLimit}${currentPage === 1 ? "" : `&offset=${mangasLimit * (currentPage - 1) + 4}`}`
-	) as Promise<MangaSearchResponse>;
+	export let data;
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -27,12 +16,12 @@
 					<h2 class="text-2xl font-bold">Top Rated Manga</h2>
 				</div>
 				<div class="mb-8">
-					<Pagination pageNumber={currentPage} mangaData={topRatedMangaData} />
+					<Pagination pageNumber={data.page} mangaData={data.manga.topRated} />
 				</div>
 
-				<MangaCards mangaLimit={mangasLimit} mangaData={topRatedMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.topRated} />
 			</section>
-			<Pagination pageNumber={currentPage} mangaData={topRatedMangaData} />
+			<Pagination pageNumber={data.page} mangaData={data.manga.topRated} />
 		</div>
 	</main>
 	<Footer />

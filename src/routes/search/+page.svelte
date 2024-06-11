@@ -1,24 +1,10 @@
 <script lang="ts">
-	import { getJSON } from "utils/request";
 	import Header from "components/header.svelte";
 	import Footer from "components/footer.svelte";
 	import Pagination from "components/pagination.svelte";
-
-	import { page } from "$app/stores";
 	import MangaCards from "components/mangaCards.svelte";
 
-	let searchQuery = $page.url.searchParams.get("q") ?? "";
-	let currentPage = parseInt($page.url.searchParams.get("page") ?? "") || 1;
-
-	$: searchQuery = $page.url.searchParams.get("q") ?? "";
-	$: currentPage = parseInt($page.url.searchParams.get("page") ?? "") || 1;
-
-	const mangasLimit = 20;
-
-	let searchMangaData: Promise<MangaSearchResponse>;
-	$: searchMangaData = getJSON(
-		`manga?includes[]=cover_art&title=${searchQuery}&limit=${mangasLimit}${currentPage === 1 ? "" : `&offset=${mangasLimit * (currentPage - 1) + 4}`}`
-	) as Promise<MangaSearchResponse>;
+	export let data;
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -27,15 +13,15 @@
 		<div class="container mx-auto">
 			<section class="mb-10">
 				<div class="mb-4 flex items-center justify-center">
-					<h2 class="text-2xl font-bold">Searching for manga: "{searchQuery}"</h2>
+					<h2 class="text-2xl font-bold">Searching for manga: "{data.searchQuery}"</h2>
 				</div>
 				<div class="mb-8">
-					<Pagination pageNumber={currentPage} mangaData={searchMangaData} />
+					<Pagination pageNumber={data.currentPage} mangaData={data.manga.search} />
 				</div>
 
-				<MangaCards mangaLimit={mangasLimit} mangaData={searchMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.search} />
 			</section>
-			<Pagination pageNumber={currentPage} mangaData={searchMangaData} />
+			<Pagination pageNumber={data.currentPage} mangaData={data.manga.search} />
 		</div>
 	</main>
 	<Footer />

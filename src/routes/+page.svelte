@@ -1,22 +1,9 @@
 <script lang="ts">
-	import { getJSON } from "utils/request";
 	import Header from "components/header.svelte";
 	import Footer from "components/footer.svelte";
 	import MangaCards from "components/mangaCards.svelte";
 
-	const mangasLimit = 5;
-
-	let recentMangaData = getJSON(
-		`manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${mangasLimit}`
-	) as Promise<MangaSearchResponse>;
-
-	let topRatedMangaData = getJSON(
-		`manga?includes[]=cover_art&order[rating]=desc&limit=${mangasLimit}`
-	) as Promise<MangaSearchResponse>;
-
-	let topFollowedMangaData = getJSON(
-		`manga?includes[]=cover_art&order[followedCount]=desc&limit=${mangasLimit}`
-	) as Promise<MangaSearchResponse>;
+	export let data;
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -28,7 +15,7 @@
 					<h2 class="text-2xl font-bold">Recently Updated Manga</h2>
 					<a class="text-blue-500 hover:underline" href="/titles/recent"> View All </a>
 				</div>
-				<MangaCards mangaLimit={mangasLimit} mangaData={recentMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.recent} />
 			</section>
 		</div>
 
@@ -38,7 +25,7 @@
 					<h2 class="text-2xl font-bold">Top Rated Manga</h2>
 					<a class="text-blue-500 hover:underline" href="/titles/toprated"> View All </a>
 				</div>
-				<MangaCards mangaLimit={mangasLimit} mangaData={topRatedMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.topRated} />
 			</section>
 		</div>
 
@@ -48,7 +35,7 @@
 					<h2 class="text-2xl font-bold">Top Followed Manga</h2>
 					<a class="text-blue-500 hover:underline" href="/titles/topfollowed"> View All </a>
 				</div>
-				<MangaCards mangaLimit={mangasLimit} mangaData={topFollowedMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.topFollowed} />
 			</section>
 		</div>
 	</main>

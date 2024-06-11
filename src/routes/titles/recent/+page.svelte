@@ -1,20 +1,10 @@
 <script lang="ts">
-	import { getJSON } from "utils/request";
 	import Header from "components/header.svelte";
 	import Footer from "components/footer.svelte";
 	import Pagination from "components/pagination.svelte";
 	import MangaCards from "components/mangaCards.svelte";
-	import { page } from "$app/stores";
 
-	let currentPage: number;
-	$: currentPage = parseInt($page.url.searchParams.get("page") ?? "") || 1;
-
-	const mangasLimit = 20;
-
-	let recentMangaData: Promise<MangaSearchResponse>;
-	$: recentMangaData = getJSON(
-		`manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${mangasLimit}${currentPage === 1 ? "" : `&offset=${mangasLimit * (currentPage - 1) + 4}`}`
-	) as Promise<MangaSearchResponse>;
+	export let data;
 </script>
 
 <div class="flex min-h-screen flex-col">
@@ -26,12 +16,12 @@
 					<h2 class="text-2xl font-bold">Recently Updated Manga</h2>
 				</div>
 				<div class="mb-8">
-					<Pagination pageNumber={currentPage} mangaData={recentMangaData} />
+					<Pagination pageNumber={data.page} mangaData={data.manga.recent} />
 				</div>
 
-				<MangaCards mangaLimit={mangasLimit} mangaData={recentMangaData} />
+				<MangaCards mangaLimit={data.limit} mangaData={data.manga.recent} />
 			</section>
-			<Pagination pageNumber={currentPage} mangaData={recentMangaData} />
+			<Pagination pageNumber={data.page} mangaData={data.manga.recent} />
 		</div>
 	</main>
 	<Footer />
