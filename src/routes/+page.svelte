@@ -6,9 +6,9 @@
 	export let data;
 </script>
 
-<header>
+<svelte:head>
 	<title>hanamimanga | Home</title>
-</header>
+</svelte:head>
 
 <div class="flex min-h-screen flex-col">
 	<Header />
