@@ -17,7 +17,10 @@
 			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
 				?.attributes.title["ja-ro"] ??
 			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
-				?.attributes.title["ja"]}</title
+				?.attributes.title["ja"]} Chapter {data.manga.chapter.data.attributes.chapter}
+		{data.manga.chapter.data.attributes.title
+			? " - " + data.manga.chapter.data.attributes.title
+			: ""}</title
 	>
 </header>
 

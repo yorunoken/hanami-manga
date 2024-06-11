@@ -45,6 +45,15 @@
 	}
 </script>
 
+<header>
+	<title
+		>hanamimanga | {data.manga.data.attributes.title.en ??
+			data.manga.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+			data.manga.data.attributes.title["ja-ro"] ??
+			data.manga.data.attributes.title["ja"]}</title
+	>
+</header>
+
 <div class="flex min-h-[100dvh] flex-col">
 	<Header />
 	<main class="flex-1 bg-gray-100 px-4 py-6 md:px-6 md:py-12 dark:bg-gray-900">

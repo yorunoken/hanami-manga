@@ -6,6 +6,10 @@
 	export let data;
 </script>
 
+<header>
+	<title>hanamimanga | Home</title>
+</header>
+
 <div class="flex min-h-screen flex-col">
 	<Header />
 	<main class="flex-1 bg-gray-100 px-6 py-10 md:px-10 dark:bg-gray-900">
