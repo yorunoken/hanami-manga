@@ -15,6 +15,7 @@ interface MangaChapterSearch {
 		};
 		id: string;
 		relationships: Array<{
+			attributes: Record<string, any>;
 			id: string;
 			type: string;
 		}>;
