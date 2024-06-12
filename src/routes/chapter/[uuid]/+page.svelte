@@ -3,7 +3,8 @@
 	import BackButton from "components/backButton.svelte";
 	import { Button, Dropdown, DropdownItem } from "flowbite-svelte";
 	import { ChevronDownOutline } from "flowbite-svelte-icons";
-	// import MangaSidePanel from "components/mangaSidePanel.svelte";
+	import { saveChapterToHistory } from "utils/history.js";
+	import { onMount } from "svelte";
 
 	// let fitHeight = true;
 
@@ -24,6 +25,10 @@
 			handleMiddlePress();
 		}
 	}
+
+	onMount(() => {
+		saveChapterToHistory(data.uuid, data.manga.info.data.id);
+	});
 
 	function handleMiddlePress() {
 		showPanel = !showPanel;
