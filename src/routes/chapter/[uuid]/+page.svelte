@@ -81,7 +81,15 @@
 </svelte:head>
 
 <div
-	class={`fixed right-0 top-0 z-50 h-full overflow-auto border-l bg-white shadow-lg md:w-72 ${showPanel ? "translate-x-0" : "translate-x-full"} transition-all dark:bg-gray-800`}
+	class={`fixed right-0 top-0 z-50 h-full cursor-auto overflow-auto bg-white shadow-lg md:w-72 md:border-l ${showPanel ? "translate-x-0" : "translate-x-full"} transition-all dark:bg-gray-800`}
+	on:click={(event) => {
+		if (event?.target?.tagName === "DIV") {
+			handleMiddlePress();
+		}
+	}}
+	on:keydown={() => {}}
+	role="button"
+	tabindex="0"
 >
 	<button
 		on:click={handleMiddlePress}
