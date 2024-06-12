@@ -1,9 +1,11 @@
 import { getJSON } from "utils/request";
 
 export async function load({ params: { uuid } }) {
-	const chapterData: MangaChapterGet = await getJSON(`chapter/${uuid}?includes[]=manga`);
+	const chapterData: MangaChapterGet = await getJSON(
+		`chapter/${uuid}?includes[]=manga&includes[]=author&includes[]=artist`
+	);
 	const mangaData: MangaResponse = await getJSON(
-		`manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}?includes[]=cover_art`
+		`manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}?includes[]=cover_art&includes[]=author&includes[]=artist`
 	);
 
 	const totalChaptersData: AggregateChapter = await getJSON(
@@ -19,6 +21,8 @@ export async function load({ params: { uuid } }) {
 	const nextChapterId = allChapters[currentChapterIndex + 1]?.id;
 
 	return {
+		uuid,
+		allChapters,
 		nextChapterId,
 		manga: {
 			chapter: chapterData,
