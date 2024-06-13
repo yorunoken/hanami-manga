@@ -15,20 +15,52 @@
 </script>
 
 <header class="bg-gray-800 px-6 py-4 text-white md:px-10">
-	<div class="container mx-auto flex items-center justify-between">
-		<a class="text-2xl font-bold" href="/"> hanamimanga </a>
+	<div class="container mx-auto flex items-center justify-between gap-8">
+		<a class="text-lg font-semibold md:text-2xl md:font-bold" href="/"> hanamimanga </a>
 		<div class="flex">
 			<a
 				href="/changelog"
-				class="mr-4 inline-flex items-center justify-center rounded-lg bg-[#55efc4] px-4 py-2 text-sm font-medium text-[#1e1e1e] transition-colors hover:bg-[#00b894]"
+				class="mr-4 inline-flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700"
 			>
-				Changelog
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+					<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+					<path d="M12 11h4" />
+					<path d="M12 16h4" />
+					<path d="M8 11h.01" />
+					<path d="M8 16h.01" />
+				</svg>
+				<div class="hidden md:flex">Changelog</div>
 			</a>
 			<a
 				href="/history"
-				class="mr-4 inline-flex items-center justify-center rounded-lg bg-[#55efc4] px-4 py-2 text-sm font-medium text-[#1e1e1e] transition-colors hover:bg-[#00b894]"
+				class="mr-4 inline-flex items-center justify-center gap-2 rounded-lg border-2 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-700"
 			>
-				History
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="12" cy="12" r="10" />
+					<polyline points="12 6 12 12 16 14" />
+				</svg>
+				<div class="hidden md:flex">History</div>
 			</a>
 			<div class="relative">
 				<button
@@ -54,7 +86,7 @@
 					</svg>
 				</button>
 				<input
-					class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-gray-800 px-3 py-2 pl-10 pr-4 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus:outline-none focus:ring-2 focus:ring-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+					class="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border-2 bg-gray-800 px-3 py-2 pl-10 pr-4 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus:outline-none focus:ring-2 focus:ring-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 					placeholder="Search manga..."
 					type="search"
 					bind:value={mangaName}
