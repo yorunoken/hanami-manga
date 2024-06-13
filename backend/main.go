@@ -2,13 +2,23 @@ package main
 
 import (
 	gg "backend/api"
+	"fmt"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	if err := godotenv.Load("../.env"); err != nil {
+		fmt.Println("Error loading .env file. Exiting.")
+		os.Exit(0)
+	}
+
+	fmt.Println(os.Getenv("access_token"))
+
 	router := gin.Default()
 
 	config := cors.Config{
@@ -35,6 +45,9 @@ func main() {
 		api.GET("/chapter/:uuid", gg.GetChapter)
 
 		api.GET("/at-home/server/:uuid", gg.HomeServer)
+
+		api.GET("/changelogs", gg.Changelogs)
+		api.POST("/changelogs/add", gg.AddChangelog)
 	}
 
 	router.Run(":8080")
