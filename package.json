@@ -7,7 +7,7 @@
 		"dev:go": "cd backend && air",
 		"dev": "concurrently \"npm run dev:go\" \"npm run dev:svelte\"",
 		"build:svelte": "vite build",
-		"build:go": "cd backend && go build",
+		"build:go": "cd backend && go build main.go",
 		"build": "npm run build:svelte && npm run build:go",
 		"start": "concurrently \"node -r dotenv/config build\" \"cd backend && ./main\"",
 		"preview": "vite preview",

@@ -17,56 +17,63 @@
 				{#await data.changelogs}
 					<p>Waiting..</p>
 				{:then changelogs}
-					{#each changelogs.data as changelog}
-						<div class="space-y-6">
-							<div class="grid gap-4">
-								<div class="flex items-center justify-between">
-									<div class="flex items-center gap-2">
-										<div
-											class="rounded-md bg-gray-100 px-3 py-1 text-sm font-medium dark:bg-gray-800"
-										>
-											{changelog.version}
+					{#if changelogs.data.length === 0}
+						<p class="text-base text-gray-400 dark:text-gray-200">
+							It seems like there are no changelogs at this time. Check in later!
+						</p>
+					{:else}
+						{#each changelogs.data as changelog}
+							<div class="space-y-6">
+								<div class="grid gap-4">
+									<div class="flex items-center justify-between">
+										<div class="flex items-center gap-2">
+											<div
+												class="rounded-md bg-gray-100 px-3 py-1 text-sm font-medium dark:bg-gray-800"
+											>
+												{changelog.version}
+											</div>
+											<p class="text-sm text-gray-500 dark:text-gray-400">
+												{new Date(
+													`${changelog.date.split("-").reverse().join("-")}`
+												).toLocaleDateString("en-GB", {
+													month: "long",
+													day: "numeric",
+													year: "numeric"
+												})}
+											</p>
 										</div>
-										<p class="text-sm text-gray-500 dark:text-gray-400">
-											{new Date(
-												`${changelog.date.split("-").reverse().join("-")}`
-											).toLocaleDateString("en-GB", {
-												month: "long",
-												day: "numeric",
-												year: "numeric"
-											})}
-										</p>
+									</div>
+									<div class="text-sm text-gray-500 dark:text-gray-400">
+										<ul class="space-y-2">
+											{#if changelog.features.length > 0}
+												<li>
+													<span class="font-medium text-gray-900 dark:text-gray-50"
+														>New Features:</span
+													>
+													{changelog.features}
+												</li>
+											{/if}
+											{#if changelog.bugs.length > 0}
+												<li>
+													<span class="font-medium text-gray-900 dark:text-gray-50">Bug Fixes:</span
+													>
+													{changelog.bugs}
+												</li>
+											{/if}
+											{#if changelog.enhancements.length > 0}
+												<li>
+													<span class="font-medium text-gray-900 dark:text-gray-50"
+														>Enhancements:</span
+													>
+													{changelog.enhancements}
+												</li>
+											{/if}
+										</ul>
 									</div>
 								</div>
-								<div class="text-sm text-gray-500 dark:text-gray-400">
-									<ul class="space-y-2">
-										{#if changelog.features.length > 0}
-											<li>
-												<span class="font-medium text-gray-900 dark:text-gray-50"
-													>New Features:</span
-												>
-												{changelog.features}
-											</li>
-										{/if}
-										{#if changelog.bugs.length > 0}
-											<li>
-												<span class="font-medium text-gray-900 dark:text-gray-50">Bug Fixes:</span>
-												{changelog.bugs}
-											</li>
-										{/if}
-										{#if changelog.enhancements.length > 0}
-											<li>
-												<span class="font-medium text-gray-900 dark:text-gray-50"
-													>Enhancements:</span
-												>
-												{changelog.enhancements}
-											</li>
-										{/if}
-									</ul>
-								</div>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					{/if}
 				{/await}
 			</div>
 		</div>
