@@ -33,9 +33,7 @@
 												{changelog.version}
 											</div>
 											<p class="text-sm text-gray-500 dark:text-gray-400">
-												{new Date(
-													`${changelog.date.split("-").reverse().join("-")}`
-												).toLocaleDateString("en-GB", {
+												{new Date(`${changelog.date}`).toLocaleDateString("en-US", {
 													month: "long",
 													day: "numeric",
 													year: "numeric"
