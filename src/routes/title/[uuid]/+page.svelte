@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { getJSON } from "utils/request";
 	import { page } from "$app/stores";
 	import Footer from "components/footer.svelte";
 	import Header from "components/header.svelte";
@@ -7,12 +6,15 @@
 	import RightButton from "components/chevronRightIcon.svelte";
 	import SvelteMarkdown from "svelte-markdown";
 	import Pagination from "components/chapterPagePagination.svelte";
+	import ReadCard from "components/readCard.svelte";
+	import { getReadChapters } from "utils/history.js";
 	import { onMount } from "svelte";
 
 	export let data;
 
 	const uuid = $page.params.uuid;
 	const chaptersPerPage = 40;
+	let readData: { chapterUuid: string; mangaId: string; updatedAt: string } | undefined;
 
 	let chapterData: MangaChapterSearch;
 
@@ -27,6 +29,8 @@
 
 	onMount(async () => {
 		await fetchData();
+		readData = getReadChapters().find((g) => g.mangaId === data.manga.data.id);
+		console.log(readData);
 	});
 
 	function incrementPage() {
@@ -129,11 +133,19 @@
 							</div>
 						{/each}
 					</div>
-					<p class="mb-6 text-gray-700 dark:text-gray-400">
+					<p class="text-gray-700 dark:text-gray-400">
 						<SvelteMarkdown
 							source={data.manga.data.attributes.description.en ?? "No description was provided."}
 						/>
 					</p>
+					<div class="my-2 flex justify-center md:justify-normal">
+						<ReadCard
+							link={readData
+								? `/chapter/${readData.chapterUuid}`
+								: `/chapter/${chapterData.data[0].id}`}
+							text={readData ? "Continue Reading" : "Start Reading"}
+						/>
+					</div>
 					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
 						<div class="flex justify-between">
 							<h2 class="mb-4 text-xl font-bold">Chapters</h2>

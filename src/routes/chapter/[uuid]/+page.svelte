@@ -10,6 +10,7 @@
 
 	export let data;
 	let showPanel = false;
+	let mounted = false;
 
 	function handlePress(event: any) {
 		const boundingBox = event.currentTarget.getBoundingClientRect();
@@ -26,8 +27,14 @@
 		}
 	}
 
+	$: {
+		if (mounted) {
+			saveChapterToHistory(data.uuid, data.manga.info.data.id);
+		}
+	}
 	onMount(() => {
 		saveChapterToHistory(data.uuid, data.manga.info.data.id);
+		mounted = true;
 	});
 
 	function handleMiddlePress() {
@@ -86,9 +93,9 @@
 </svelte:head>
 
 <div
-	class={`fixed right-0 top-0 z-50 h-full cursor-auto overflow-auto bg-white shadow-lg md:w-72 md:border-l ${showPanel ? "translate-x-0" : "translate-x-full"} transition-all dark:bg-gray-800`}
+	class={`secret-class fixed right-0 top-0 z-50 h-full cursor-auto overflow-auto bg-white shadow-lg md:w-72 md:border-l ${showPanel ? "translate-x-0" : "translate-x-full"} transition-all dark:bg-gray-800`}
 	on:click={(event) => {
-		if (event?.target?.tagName === "DIV") {
+		if (event?.target && event.target.classList.contains("secret-class")) {
 			handleMiddlePress();
 		}
 	}}
@@ -134,19 +141,19 @@
 				: data.manga.info.data.attributes.description.en ?? ""}
 		</p>
 		<div class="mt-6 flex justify-center rounded-lg border p-2">
-			<Button
+			<Button class="w-full"
 				>Chapter {data.manga.chapter.data.attributes.chapter}
 				{data.manga.chapter.data.attributes.title
 					? " - " + data.manga.chapter.data.attributes.title
 					: ""}<ChevronDownOutline class="ms-2 text-black dark:text-white" /></Button
 			>
-			<Dropdown class="h-48 w-48 overflow-y-auto bg-gray-950 p-3 py-1 text-white">
+			<Dropdown class="h-60 w-48 overflow-y-auto bg-gray-950 p-3 py-1 text-white">
 				{#each data.allChapters as chapter}
 					<div
 						class={`rounded-lg ${data.uuid === chapter.id ? "border" : ""} hover:bg-gray-100 dark:hover:bg-gray-600`}
 					>
-						<a href={`/chapter/${chapter.id}`}>
-							<DropdownItem>Chapter {chapter.chapter}</DropdownItem>
+						<a class="rounded-lg" href={`/chapter/${chapter.id}`}>
+							<DropdownItem class="rounded-lg">Chapter {chapter.chapter}</DropdownItem>
 						</a>
 					</div>
 				{/each}
