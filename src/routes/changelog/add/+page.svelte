@@ -12,17 +12,16 @@
 	let enhancements: string | null = null;
 
 	async function handleSubmit() {
+		const changelogs = await fetch("/api/changelogs").then((res) => res.json());
+
 		const formData = {
 			version,
 			date,
 			features,
 			bugs,
 			enhancements,
-			id: 1
+			id: changelogs.data.length + 1
 		};
-
-		const changelogs = await fetch("/api/changelogs").then((res) => res.json());
-		console.log(changelogs);
 
 		fetch(`/api/changelogs/add?token=${data.cookie}`, {
 			method: "POST",
