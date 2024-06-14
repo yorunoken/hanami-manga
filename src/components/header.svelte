@@ -62,7 +62,7 @@
 				</svg>
 				<div class="hidden md:flex">History</div>
 			</a>
-			<div class="relative">
+			<!-- <div class="relative">
 				<button
 					aria-label="Search Manga"
 					on:click={searchManga}
@@ -92,7 +92,55 @@
 					bind:value={mangaName}
 					on:keypress={handleKeyPress}
 				/>
+			</div> -->
+
+			<div class="relative hidden w-full md:flex">
+				<input
+					type="search"
+					placeholder="Search..."
+					class="pr-10 sm:pr-8"
+					bind:value={mangaName}
+					on:keypress={handleKeyPress}
+				/>
+				<button
+					on:click={searchManga}
+					class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-2"
+				>
+					<svg
+						class="h-5 w-5 text-gray-400"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="11" cy="11" r="8" />
+						<path d="m21 21-4.3-4.3" />
+					</svg>
+				</button>
 			</div>
+			<a href={`/search?q=${mangaName}`} class="ml-2 flex rounded-full md:hidden">
+				<svg
+					class="h-6 w-6"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<circle cx="11" cy="11" r="8" />
+					<path d="m21 21-4.3-4.3" />
+				</svg>
+				<span class="sr-only">Search</span>
+			</a>
 		</div>
 	</div>
 </header>
