@@ -62,11 +62,39 @@
 				</svg>
 				<div class="hidden md:flex">History</div>
 			</a>
-			<!-- <div class="relative">
+
+			<div class="flex items-center">
+				<div class="relative hidden flex-1 sm:block">
+					<button class="flex" on:click={searchManga}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 dark:text-gray-400"
+							style="--darkreader-inline-stroke: currentColor;"
+							data-darkreader-inline-stroke=""
+						>
+							<circle cx="11" cy="11" r="8"></circle>
+							<path d="m21 21-4.3-4.3"></path>
+						</svg>
+					</button>
+					<input
+						bind:value={mangaName}
+						on:keypress={handleKeyPress}
+						class="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border-2 border-white bg-transparent px-3 py-2 pl-10 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus:border-gray-400 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-50"
+						placeholder="Search"
+						type="search"
+					/>
+				</div>
 				<button
-					aria-label="Search Manga"
 					on:click={searchManga}
-					class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+					class="ring-offset-background focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md border-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:hidden"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +106,7 @@
 						stroke-width="2"
 						stroke-linecap="round"
 						stroke-linejoin="round"
+						class="h-5 w-5"
 						style="--darkreader-inline-stroke: currentColor;"
 						data-darkreader-inline-stroke=""
 					>
@@ -85,62 +114,7 @@
 						<path d="m21 21-4.3-4.3"></path>
 					</svg>
 				</button>
-				<input
-					class="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border-2 bg-gray-800 px-3 py-2 pl-10 pr-4 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus:outline-none focus:ring-2 focus:ring-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-					placeholder="Search manga..."
-					type="search"
-					bind:value={mangaName}
-					on:keypress={handleKeyPress}
-				/>
-			</div> -->
-
-			<div class="relative hidden w-full md:flex">
-				<input
-					type="search"
-					placeholder="Search..."
-					class="pr-10 sm:pr-8"
-					bind:value={mangaName}
-					on:keypress={handleKeyPress}
-				/>
-				<button
-					on:click={searchManga}
-					class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-2"
-				>
-					<svg
-						class="h-5 w-5 text-gray-400"
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<circle cx="11" cy="11" r="8" />
-						<path d="m21 21-4.3-4.3" />
-					</svg>
-				</button>
 			</div>
-			<a href={`/search?q=${mangaName}`} class="ml-2 flex rounded-full md:hidden">
-				<svg
-					class="h-6 w-6"
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<circle cx="11" cy="11" r="8" />
-					<path d="m21 21-4.3-4.3" />
-				</svg>
-				<span class="sr-only">Search</span>
-			</a>
 		</div>
 	</div>
 </header>
