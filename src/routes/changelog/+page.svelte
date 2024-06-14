@@ -22,7 +22,7 @@
 							It seems like there are no changelogs at this time. Check in later!
 						</p>
 					{:else}
-						{#each changelogs.data.sort((a, b) => a.id - b.id) as changelog}
+						{#each changelogs.data.sort((a, b) => b.id - a.id) as changelog}
 							<div class="space-y-6">
 								<div class="grid gap-4">
 									<div class="flex items-center justify-between">
