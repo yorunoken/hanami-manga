@@ -7,6 +7,7 @@
 	import SvelteMarkdown from "svelte-markdown";
 	import Pagination from "components/chapterPagePagination.svelte";
 	import ReadCard from "components/readCard.svelte";
+	import FavoriteCard from "components/favoriteCard.svelte";
 	import { getReadChapters } from "utils/history.js";
 	import { onMount } from "svelte";
 
@@ -138,13 +139,14 @@
 							source={data.manga.data.attributes.description.en ?? "No description was provided."}
 						/>
 					</p>
-					<div class="my-2 flex justify-center md:justify-normal">
+					<div class="my-2 flex justify-center gap-4">
 						<ReadCard
 							link={readData
 								? `/chapter/${readData.chapterUuid}`
 								: `/chapter/${chapterData.data[0].id}`}
 							text={readData ? "Continue Reading" : "Start Reading"}
 						/>
+						<FavoriteCard mangaId={data.manga.data.id} />
 					</div>
 					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
 						<div class="flex justify-between">
