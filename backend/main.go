@@ -17,8 +17,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println(os.Getenv("access_token"))
-
 	router := gin.Default()
 
 	config := cors.Config{
@@ -48,6 +46,8 @@ func main() {
 
 		api.GET("/changelogs", gg.Changelogs)
 		api.POST("/changelogs/add", gg.AddChangelog)
+
+		api.GET("/lapaii/get-anime/:uuid", gg.GetAnime)
 	}
 
 	router.Run(":8080")
