@@ -139,45 +139,54 @@
 							source={data.manga.data.attributes.description.en ?? "No description was provided."}
 						/>
 					</p>
-					<div class="my-2 flex justify-center gap-4">
-						<ReadCard
-							link={readData
-								? `/chapter/${readData.chapterUuid}`
-								: `/chapter/${chapterData.data[0].id}`}
-							text={readData ? "Continue Reading" : "Start Reading"}
-						/>
-						<FavoriteCard mangaId={data.manga.data.id} />
-					</div>
-					<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
-						<div class="flex justify-between">
-							<h2 class="mb-4 text-xl font-bold">Chapters</h2>
-							<h2 class="mb-4 text-base">
-								Page {currentPage}/{Math.ceil(chapterData.total / chaptersPerPage)}
-							</h2>
+					{#if chapterData.data.length > 0}
+						<div class="my-2 flex justify-center gap-4">
+							<ReadCard
+								link={readData
+									? `/chapter/${readData.chapterUuid}`
+									: `/chapter/${chapterData.data[0].id}`}
+								text={readData ? "Continue Reading" : "Start Reading"}
+							/>
+							<FavoriteCard mangaId={data.manga.data.id} />
 						</div>
-						<div class="flex justify-between rounded-md border">
-							<ul class="w-1/2 space-y-2 p-2">
-								{#each chapterData.data.slice(0, 20) as chapter}
-									<li>
-										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
-											Chapter {chapter.attributes.chapter}
-											{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
-										</a>
-									</li>
-								{/each}
-							</ul>
-							<ul class="w-1/2 space-y-2 p-2">
-								{#each chapterData.data.slice(20, 40) as chapter}
-									<li>
-										<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
-											Chapter {chapter.attributes.chapter}
-											{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
-										</a>
-									</li>
-								{/each}
-							</ul>
+						<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
+							<div class="flex justify-between">
+								<h2 class="mb-4 text-xl font-bold">Chapters</h2>
+								<h2 class="mb-4 text-base">
+									Page {currentPage}/{Math.ceil(chapterData.total / chaptersPerPage)}
+								</h2>
+							</div>
+							<div class="flex justify-between rounded-md border">
+								<ul class="w-1/2 space-y-2 p-2">
+									{#each chapterData.data.slice(0, 20) as chapter}
+										<li>
+											<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
+												Chapter {chapter.attributes.chapter}
+												{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
+											</a>
+										</li>
+									{/each}
+								</ul>
+								<ul class="w-1/2 space-y-2 p-2">
+									{#each chapterData.data.slice(20, 40) as chapter}
+										<li>
+											<a href={`/chapter/${chapter.id}`} class="text-primary-500 hover:underline">
+												Chapter {chapter.attributes.chapter}
+												{chapter.attributes.title ? " - " + chapter.attributes.title : ""}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</div>
 						</div>
-					</div>
+					{:else}
+						<div class="rounded-md bg-gray-200 p-4 dark:bg-gray-800">
+							<div class="flex justify-between">
+								<h2 class="mb-4 text-xl font-bold">Chapters</h2>
+							</div>
+							<div class="flex justify-between rounded-md">No chapters.</div>
+						</div>
+					{/if}
 					<div class="mt-4 flex items-center justify-center space-x-2">
 						{#if currentPage > 1}
 							<LeftButton on:click={decrementPage} />
