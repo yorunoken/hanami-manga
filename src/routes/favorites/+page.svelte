@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Header from "components/header.svelte";
 	import Footer from "components/footer.svelte";
+	import FavoriteCard from "components/favoriteCard.svelte";
 	import { getFavorites } from "utils/favorites";
 	import { onMount } from "svelte";
 
@@ -60,6 +61,9 @@
 								<p class="text-sm text-gray-300">
 									{data.attributes.description.en ?? "No description was provided."}
 								</p>
+								<div class="mt-2">
+									<FavoriteCard mangaId={data.id} />
+								</div>
 							</div>
 						</div>
 					{/each}

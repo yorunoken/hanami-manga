@@ -43,7 +43,7 @@
 			);
 		}
 
-		const minValue = Math.min(manga.data.length, chapter.data.length);
+		const minValue = Math.min(manga?.data?.length ?? 0, chapter?.data?.length ?? 0);
 		minData = Array.from({ length: minValue }, (_, index) => index);
 
 		loading = false;
@@ -54,7 +54,9 @@
 <main class="flex min-h-screen justify-center bg-gray-900">
 	<div class="container mx-auto px-4 py-8 md:px-6">
 		<h1 class="mb-6 text-center text-2xl font-bold">Your Reading History</h1>
-		{#if !loading && !manga && !chapter}
+		{#if loading}
+			<h2>Loading....</h2>
+		{:else if !manga || !chapter}
 			<h2>You have no read manga.</h2>
 		{:else}
 			<div class="grid gap-6">
