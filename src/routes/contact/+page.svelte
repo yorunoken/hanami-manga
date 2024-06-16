@@ -4,9 +4,9 @@
 </script>
 
 <svelte:head>
-	<title>hanamimanga | Contect</title>
+	<title>HanamiManga | Contect</title>
 	<meta name="description" content="Contact us." />
-	<meta name="keywords" content="manga, manga reader, hanamimanga, hanami, contact" />
+	<meta name="keywords" content="manga, manga reader, HanamiManga, hanami, contact" />
 </svelte:head>
 
 <Header />

@@ -4,15 +4,15 @@
 </script>
 
 <svelte:head>
-	<title>hanamimanga | About</title>
+	<title>HanamiManga | About</title>
 	<meta name="description" content="About us." />
-	<meta name="keywords" content="manga, manga reader, hanamimanga, about" />
+	<meta name="keywords" content="manga, manga reader, HanamiManga, about" />
 </svelte:head>
 
 <Header />
 <main class="flex min-h-screen justify-center bg-gray-900">
 	<div class="container mx-auto px-4 py-10 text-white md:px-0">
-		<h1 class="mb-4 text-3xl font-bold">About hanamimanga</h1>
+		<h1 class="mb-4 text-3xl font-bold">About HanamiManga</h1>
 		<p class="mb-6">
 			Hello all, I'm yorunoken, the fella who made this website.<br />
 			The website *should* be open source by the time you're reading this, so scroll a little down and

@@ -8,9 +8,9 @@
 </script>
 
 <svelte:head>
-	<title>hanamimanga | Recent Manga</title>
+	<title>HanamiManga | Recent Manga</title>
 	<meta name="description" content="Dive into exciting new manga!" />
-	<meta name="keywords" content="manga, manga reader, hanamimanga, hanami, recent" />
+	<meta name="keywords" content="manga, manga reader, HanamiManga, hanami, recent" />
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">

@@ -17,7 +17,7 @@
 
 <header class="hidden bg-gray-800 px-6 py-4 text-white md:flex md:px-10">
 	<div class="container mx-auto flex items-center justify-between gap-8">
-		<a class="text-lg font-semibold md:text-2xl md:font-bold" href="/"> hanamimanga </a>
+		<a class="text-lg font-semibold md:text-2xl md:font-bold" href="/"> HanamiManga </a>
 		<div class="flex">
 			<a
 				href="/changelog"
@@ -234,7 +234,7 @@
 {:else}
 	<header class="flex bg-gray-800 px-6 py-4 text-white md:hidden md:px-10">
 		<div class="container mx-auto flex items-center justify-between gap-8">
-			<a class="text-lg font-semibold md:text-2xl md:font-bold" href="/"> hanamimanga </a>
+			<a class="text-lg font-semibold md:text-2xl md:font-bold" href="/"> HanamiManga </a>
 			<div class="flex items-center gap-4">
 				<button
 					on:click={() => {

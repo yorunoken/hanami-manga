@@ -52,7 +52,7 @@
 
 <svelte:head>
 	<title
-		>hanamimanga | {data.manga.chapter.data.relationships.find(
+		>HanamiManga | {data.manga.chapter.data.relationships.find(
 			(relationship) => relationship.type === "manga"
 		)?.attributes.title.en ??
 			data.manga.chapter.data.relationships
@@ -73,7 +73,7 @@
 	/>
 	<meta
 		name="keywords"
-		content={`manga, manga reader, hanamimanga, hanami, ${
+		content={`manga, manga reader, HanamiManga, hanami, ${
 			data.manga.chapter.data.relationships.find((relationship) => relationship.type === "manga")
 				?.attributes.title.en ??
 			data.manga.chapter.data.relationships

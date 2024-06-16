@@ -21,9 +21,9 @@
 </script>
 
 <svelte:head>
-	<title>hanamimanga | Search ({data.searchQuery})</title>
+	<title>HanamiManga | Search ({data.searchQuery})</title>
 	<meta name="description" content="Dive into exciting new anime!" />
-	<meta name="keywords" content="manga, manga reader, hanamimanga, hanami, search" />
+	<meta name="keywords" content="manga, manga reader, HanamiManga, hanami, search" />
 </svelte:head>
 
 <div class="flex min-h-screen flex-col">

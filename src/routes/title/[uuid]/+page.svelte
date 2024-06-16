@@ -52,7 +52,7 @@
 
 <svelte:head>
 	<title
-		>hanamimanga | {data.manga.data.attributes.title.en ??
+		>HanamiManga | {data.manga.data.attributes.title.en ??
 			data.manga.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
 			data.manga.data.attributes.title["ja-ro"] ??
 			data.manga.data.attributes.title["ja"]}</title
@@ -63,7 +63,7 @@
 	/>
 	<meta
 		name="keywords"
-		content={`manga, manga reader, hanamimanga, hanami, ${
+		content={`manga, manga reader, HanamiManga, hanami, ${
 			data.manga.data.attributes.title.en ??
 			data.manga.data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
 			data.manga.data.attributes.title["ja-ro"] ??
