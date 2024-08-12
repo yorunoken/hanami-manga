@@ -1,26 +1,33 @@
 {
-  "name": "hanami-manga",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
-  }
+    "name": "hanami-manga",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev:next": "next dev",
+        "dev:rs": "cd backend && cargo run",
+        "dev": "concurrently \"bun run dev:rs\" \"bun run dev:next\"",
+        "build": "bun run build:rs && bun run build:next",
+        "build:rs": "cd backend && cargo build -r",
+        "build:next": "next build",
+        "start:rs": "cd backend && ./target/release/backend",
+        "start:next": "next start",
+        "start": "concurrently \"bun run start:rs\" \"bun run start:next\"",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "concurrently": "^8.2.2",
+        "react": "^18",
+        "react-dom": "^18",
+        "next": "14.2.5"
+    },
+    "devDependencies": {
+        "typescript": "^5",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "postcss": "^8",
+        "tailwindcss": "^3.4.1",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.5"
+    }
 }
