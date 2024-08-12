@@ -1,7 +1,6 @@
 use crate::api;
 use warp::{
     http::{Response, StatusCode},
-    hyper::Body,
     Filter,
 };
 
