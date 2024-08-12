@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use reqwest::header::{CONTENT_TYPE, USER_AGENT};
 use serde::{Deserialize, Serialize};
 use warp::{http::StatusCode, reply, Reply};
@@ -8,7 +10,7 @@ pub struct Error {
     cat: String,
 }
 
-pub async fn json<T>(url: String) -> impl Reply
+pub async fn json<T>(url: String, query: HashMap<String, String>) -> impl Reply
 where
     T: serde::de::DeserializeOwned + serde::Serialize,
 {
@@ -16,6 +18,7 @@ where
 
     let res = match client
         .get(&url)
+        .query(&query)
         .header(CONTENT_TYPE, "application/json")
         .header(
             USER_AGENT,
