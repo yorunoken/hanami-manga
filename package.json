@@ -15,10 +15,14 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@chakra-ui/react": "^2.8.2",
+        "@emotion/react": "^11.13.0",
+        "@emotion/styled": "^11.13.0",
         "concurrently": "^8.2.2",
+        "framer-motion": "^11.3.24",
+        "next": "14.2.5",
         "react": "^18",
-        "react-dom": "^18",
-        "next": "14.2.5"
+        "react-dom": "^18"
     },
     "devDependencies": {
         "typescript": "^5",
