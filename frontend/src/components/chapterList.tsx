@@ -2,7 +2,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/icons/chevron";
 import { BASE_URL } from "@/lib";
 import { ChapterListSchema, ChapterSchema } from "@/types/schema";
-import { Button } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useEffect, useCallback, MouseEventHandler } from "react";
 
@@ -150,7 +150,6 @@ function PageButton({
             className={`px-3 py-1 border border-muted/60 rounded-lg bg-inherit ${disabled ? "hover:cursor-not-allowed" : "hover:bg-muted/15"} transition-colors`}
             disabled={side === "left"}
             onClick={onClick}
-            isDisabled={disabled}
         >
             {side === "left" ? (
                 <ChevronLeftIcon className="h-4 w-4" />

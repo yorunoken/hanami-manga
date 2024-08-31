@@ -2,7 +2,8 @@ import { ClipboardIcon } from "@/icons/clipboard";
 import { ClockIcon } from "@/icons/clock";
 import { HeartIcon } from "@/icons/heart";
 import { SearchIcon } from "@/icons/search";
-import { Button, Input } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
 export default function Header() {
