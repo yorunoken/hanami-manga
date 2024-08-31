@@ -1,8 +1,5 @@
 use crate::api;
-use warp::{
-    http::{Response, StatusCode},
-    Filter,
-};
+use warp::Filter;
 
 pub fn routes() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let get_manga = warp::path!("api" / "manga" / String)
@@ -25,6 +22,11 @@ pub fn routes() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejecti
         .and(warp::query::<std::collections::HashMap<String, String>>())
         .and_then(api::get_chapter);
 
+    let get_chapter_collection = warp::path!("api" / "chapter")
+        .and(warp::get())
+        .and(warp::query::<std::collections::HashMap<String, String>>())
+        .and_then(api::get_chapter_collection);
+
     let at_home_server = warp::path!("api" / "homeserver" / String)
         .and(warp::get())
         .and(warp::query::<std::collections::HashMap<String, String>>())
@@ -45,16 +47,6 @@ pub fn routes() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejecti
         .or(get_manga_collection)
         .or(get_manga_aggregate)
         .or(get_chapter)
+        .or(get_chapter_collection)
         .or(at_home_server)
-}
-
-async fn handle_rejection(err: warp::Rejection) -> Result<impl warp::Reply, warp::Rejection> {
-    if err.is_not_found() {
-        let response = Response::builder()
-            .status(StatusCode::NOT_FOUND)
-            .body("404 - Not Found");
-        Ok(response)
-    } else {
-        Err(err)
-    }
 }

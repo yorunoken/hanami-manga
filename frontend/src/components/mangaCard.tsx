@@ -2,29 +2,29 @@ import type { MangaSchema } from "@/types/schema";
 import Image from "next/image";
 import Link from "next/link";
 
-export function MangaCard({ data }: { data: MangaSchema }) {
-    const relationshipAttributes = data.relationships.find(
+export function MangaCard({ manga }: { manga: MangaSchema }) {
+    const relationshipAttributes = manga.relationships.find(
         (relationship) => relationship.type === "cover_art",
     )?.attributes as { fileName?: string } | null;
 
     const title =
-        data.attributes.title.en ??
-        data.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
-        data.attributes.title["ja-ro"] ??
-        data.attributes.title["ja"] ??
+        manga.attributes.title.en ??
+        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+        manga.attributes.title["ja-ro"] ??
+        manga.attributes.title["ja"] ??
         "Unknown Title";
 
     const description =
-        data.attributes.description.en ?? "No description available.";
+        manga.attributes.description.en ?? "No description available.";
 
     return (
         <Link
-            href={`/title/${data.id}`}
+            href={`/manga/${manga.id}`}
             className="bg-[#2a2a2a] rounded-lg overflow-hidden"
             prefetch={false}
         >
             <Image
-                src={`/api/proxyimage?url=https://mangadex.org/covers/${data.id}/${relationshipAttributes?.fileName}`}
+                src={`/api/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
                 alt="Manga Cover"
                 width={300}
                 height={400}

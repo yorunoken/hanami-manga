@@ -2,7 +2,6 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { MangaCategory } from "@/components/mangaCategory";
 import { BASE_URL } from "@/lib";
-import { MangaSchema } from "@/types/schema";
 
 async function fetchMangas() {
     const limit = 5;

@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer className="bg-[#1e1e1e] text-white flex items-center justify-between px-6 py-3">
             <div className="font-bold text-sm">
-                © 2024 hanamimanga. All rights reserved.
+                © 2024 Hanami Manga. All rights reserved.
             </div>
             <Link
                 href="https://anime.lapaii.dev"

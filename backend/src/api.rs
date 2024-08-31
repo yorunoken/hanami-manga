@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mangadex_api_schema_rust::v5::{
-    AtHomeServer, ChapterData, MangaAggregate, MangaCollection, MangaData,
+    AtHomeServer, ChapterCollection, ChapterData, MangaAggregate, MangaCollection, MangaData,
 };
 use reqwest::header::{CONTENT_TYPE, USER_AGENT};
 use serde::{Deserialize, Serialize};
@@ -35,7 +35,6 @@ pub async fn get_manga_aggregate(
     query: HashMap<String, String>,
 ) -> Result<impl Reply, Rejection> {
     let full_url = format!("{}/manga/{}/aggregate", MANGADEX_API, uuid);
-    println!("{}", full_url);
     Ok(request::json::<MangaAggregate>(full_url, query).await)
 }
 
@@ -44,8 +43,14 @@ pub async fn get_chapter(
     query: HashMap<String, String>,
 ) -> Result<impl Reply, Rejection> {
     let full_url = format!("{}/chapter/{}", MANGADEX_API, uuid);
-    println!("{}", full_url);
     Ok(request::json::<ChapterData>(full_url, query).await)
+}
+
+pub async fn get_chapter_collection(
+    query: HashMap<String, String>,
+) -> Result<impl Reply, Rejection> {
+    let full_url = format!("{}/chapter", MANGADEX_API);
+    Ok(request::json::<ChapterCollection>(full_url, query).await)
 }
 
 pub async fn proxy_image(
@@ -93,6 +98,5 @@ pub async fn at_home_server(
     query: HashMap<String, String>,
 ) -> Result<impl Reply, Rejection> {
     let full_url = format!("{}/at-home/server/{}", MANGADEX_API, uuid);
-    println!("{}", full_url);
     Ok(request::json::<AtHomeServer>(full_url, query).await)
 }

@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Hanami Manga",
+    title: "Hanami Manga | Main Page",
     description: "Dive into exciting new manga!",
     keywords: ["manga", "manga reader", "hanami manga", "hanami"],
 };

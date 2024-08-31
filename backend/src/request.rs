@@ -16,6 +16,9 @@ where
 {
     let client = reqwest::Client::new();
 
+    println!("full URL: {}", url);
+    println!("query: {:#?}", query);
+
     let res = match client
         .get(&url)
         .query(&query)
