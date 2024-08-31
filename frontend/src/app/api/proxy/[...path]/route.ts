@@ -16,9 +16,19 @@ export async function GET(request: NextRequest) {
     });
 
     const response = await fetch(url);
-    const data = await response.json();
+    const contentType = response.headers.get("content-type");
 
-    return NextResponse.json(data);
+    console.log(contentType);
+    if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        return NextResponse.json(data);
+    } else {
+        return new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers,
+        });
+    }
 }
 
 export async function POST(request: NextRequest) {

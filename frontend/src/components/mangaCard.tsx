@@ -9,7 +9,7 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
 
     const title =
         manga.attributes.title.en ??
-        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0]?.en ??
         manga.attributes.title["ja-ro"] ??
         manga.attributes.title["ja"] ??
         "Unknown Title";
