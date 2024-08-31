@@ -15,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { data: manga } = (await fetch(
-        `${BASE_URL}api/manga/${params.uuid}`,
+        `${BASE_URL}api/proxy/manga/${params.uuid}`,
         { next: { revalidate: 60 * 60 } },
     ).then((response) => response.json())) as MangaResponseSchema;
 
@@ -33,14 +33,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function MangaPage({ params }: Props) {
     const { data: manga } = (await fetch(
-        `${BASE_URL}api/manga/${params.uuid}?includes[]=cover_art`,
+        `${BASE_URL}api/proxy/manga/${params.uuid}?includes[]=cover_art`,
         { next: { revalidate: 60 * 60 } },
     ).then((response) => response.json())) as MangaResponseSchema;
 
     const chaptersPerPage = 12;
     // fetch initial chapters
     const { data: initialChapters } = (await fetch(
-        `${BASE_URL}api/chapter?manga=${params.uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}`,
+        `${BASE_URL}api/proxy/chapter?manga=${params.uuid}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}`,
     ).then((res) => res.json())) as ChapterListSchema;
 
     const relationshipAttributes = manga.relationships.find(
@@ -65,7 +65,7 @@ export default async function MangaPage({ params }: Props) {
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4 py-12">
                 <div className="flex justify-center">
                     <Image
-                        src={`/api/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
+                        src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
                         alt="Manga Cover"
                         width={400}
                         height={600}

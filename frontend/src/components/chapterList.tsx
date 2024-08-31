@@ -46,7 +46,7 @@ export default function ChapterList({
     useEffect(() => {
         async function fetchChapters(page: number) {
             const response = (await fetch(
-                `${BASE_URL}api/chapter?manga=${mangaId}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(page - 1) * chaptersPerPage}`,
+                `${BASE_URL}api/proxy/chapter?manga=${mangaId}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(page - 1) * chaptersPerPage}`,
             ).then((res) => res.json())) as ChapterListSchema;
 
             setChapters(response.data);

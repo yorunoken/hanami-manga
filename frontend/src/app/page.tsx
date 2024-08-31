@@ -8,13 +8,13 @@ async function fetchMangas() {
 
     return {
         recent: await fetch(
-            `${BASE_URL}api/manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${limit}`,
+            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${limit}`,
         ).then((response) => response.json()),
         topRated: await fetch(
-            `${BASE_URL}api/manga?includes[]=cover_art&order[rating]=desc&limit=${limit}`,
+            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[rating]=desc&limit=${limit}`,
         ).then((response) => response.json()),
         topFollowed: await fetch(
-            `${BASE_URL}api/manga?includes[]=cover_art&order[followedCount]=desc&limit=${limit}`,
+            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[followedCount]=desc&limit=${limit}`,
         ).then((response) => response.json()),
     };
 }

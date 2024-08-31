@@ -6,9 +6,9 @@ const backendPort = process.env.BACKEND_PORT;
 export async function GET(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const searchParams = request.nextUrl.searchParams;
-    const path = pathname.replace("/api/proxy", "");
+    const path = pathname.replace("/api/proxy/", "");
 
-    const url = new URL(`http://localhost:${backendPort}/api${path}`);
+    const url = new URL(`http://localhost:${backendPort}/api/${path}`);
     console.log("proxying API url: " + url);
 
     searchParams.forEach((value, key) => {
@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
     const response = await fetch(url);
     const contentType = response.headers.get("content-type");
 
-    console.log(contentType);
     if (contentType && contentType.includes("application/json")) {
         const data = await response.json();
         return NextResponse.json(data);
@@ -33,9 +32,9 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
-    const path = pathname.replace("/api/proxy", "");
+    const path = pathname.replace("/api/proxy/", "");
 
-    const url = new URL(`http://localhost:${backendPort}/api${path}`);
+    const url = new URL(`http://localhost:${backendPort}/api/${path}`);
     console.log("proxying API url: " + url);
 
     const response = await fetch(url, {
