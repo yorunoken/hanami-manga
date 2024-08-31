@@ -1,7 +1,10 @@
 use crate::api;
+use sqlx::SqlitePool;
 use warp::Filter;
 
-pub fn routes() -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+pub fn routes(
+    pool: SqlitePool,
+) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     let get_manga = warp::path!("api" / "manga" / String)
         .and(warp::get())
         .and(warp::query::<std::collections::HashMap<String, String>>())
