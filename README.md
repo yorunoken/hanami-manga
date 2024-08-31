@@ -4,15 +4,16 @@ your cozy corner for discovering and reading your favorite manga! 🌸📚
 
 ## Features
 
-- **Browse Manga:** Explore a wide range of manga titles from the Mangadex API.
+- **Browse Manga:** Explore a vast amount of mangas.
 - **Favorite Manga:** Save your favorite manga to easily find them later.
-- **Reading History:** Keep track of what you've read and never lose your place.
-- **Self-Hosted:** The website is self-hosted on Hetzner, ensuring reliability and control.
+- **Reading History:** Easily keep track of your history locally on your browser.
+- **Profiles:** Coming soon :)
+- **Self-Hosted:** The website is self-hosted on Hetzner.
 
 ## Tech Stack
 
-- **Front End:** [SvelteKit](https://kit.svelte.dev)
-- **Back End:** [Go](https://golang.org)
+- **Front End:** [NextJS](https://nextjs.org/)
+- **Back End:** [Rust](https://www.rust-lang.org/)
 - **Data Source:** [Mangadex API](https://api.mangadex.org)
 
 ## Getting Started
@@ -30,35 +31,40 @@ Make sure you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yorunoken/Hanami Manga.git
-   cd Hanami Manga
+   git clone https://github.com/yorunoken/hanami-manga.git
+   cd hanami-manga
    ```
 
 2. Install the front end dependencies:
 
    ```bash
-   bun install
-   ```
-
-3. Build the project:
-
-   ```bash
-   bun run build
+   cd frontend && bun install
    ```
 
 ### Environment Variables
 
 Before running the application, you need to set up the following environment variables:
 
-- `access_token`: Your access token for adding changelogs in /changelog/add. This must match the value is your local storage.
+There will be two `.env.example` files and you will need to rename them to `.env` before continuing, there will be one in `frontend` and one in `backend` and you'll need to fill them out accordingly.
 
-You can set these variables in a `.env` file at the root of your project:
+## Frontend's .env file
+
+- `BACKEND_PORT`: The port of your backend, this should be the same as the PORT in the .env file of your backend.
 
 ```env
-access_token=your_access_token
+BACKEND_PORT=port number
 ```
 
-Make sure to replace `your_access_token` with your actual credentials.
+## Backend's .env file
+
+- `DATABASE_URL`: The URL of your database. I used `sqlite` for the backend so it should start with `sqlite://`, then followed by the name of your database at the root of the project. If you want to have postgres or anything else, feel free to shoot me a DM on Discord and I can work on a branch, or you could do it yourself :)
+- `PORT`: The port of your backend, this should be the same as the BACKEND_PORT in the .env file of your frontend.
+
+
+```env
+DATABASE_URL=
+PORT=
+```
 
 ### Running the Application
 
@@ -68,11 +74,11 @@ Make sure to replace `your_access_token` with your actual credentials.
    bun dev
    ```
 
-2. Open your browser and navigate to `http://localhost:3000` to see Hanami Manga in action!
+2. Open your browser and navigate to `http://localhost:PORT` to see Hanami Manga in action!
 
 ## Deployment
 
-Hanami Manga is self-hosted on Hetzner. Here are the general steps to deploy it:
+**Hanami Manga** is self-hosted on Hetzner. Here are the general steps to deploy it:
 
 1. Build the front end and back end as described in the [Installation](#installation) section.
 2. Set up a reverse proxy (e.g., Nginx) to serve the front end and back end.
@@ -80,7 +86,7 @@ Hanami Manga is self-hosted on Hetzner. Here are the general steps to deploy it:
 
 ## Contributing
 
-We welcome contributions! If you'd like to contribute, please follow these steps:
+I welcome contributions! If you'd like to contribute, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature/YourFeatureName`).
@@ -88,10 +94,6 @@ We welcome contributions! If you'd like to contribute, please follow these steps
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feature/YourFeatureName`).
 6. Open a pull request.
-
-## License
-
-This project is licensed under the GPL License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
