@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const title =
         manga.attributes.title.en ??
-        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0]?.en ??
         manga.attributes.title["ja-ro"] ??
         manga.attributes.title["ja"] ??
         "Unknown Title";
@@ -49,7 +49,7 @@ export default async function MangaPage({ params }: Props) {
 
     const title =
         manga.attributes.title.en ??
-        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0].en ??
+        manga.attributes.altTitles?.filter((altTitle) => altTitle.en)[0]?.en ??
         manga.attributes.title["ja-ro"] ??
         manga.attributes.title["ja"] ??
         "Unknown Title";
