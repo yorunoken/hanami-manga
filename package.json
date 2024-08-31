@@ -1,0 +1,25 @@
+{
+    "name": "hanami-manga",
+    "version": "1.0.0",
+    "description": "our cozy corner for discovering and reading your favorite manga! 🌸📚",
+    "scripts": {
+        "frontend:dev": "cd frontend && bun run dev",
+        "backend:dev": "cd backend && cargo run",
+        "dev": "concurrently \"bun run backend:dev\" \"bun run frontend:dev\"",
+        "frontend:build": "cd frontend && bun run build",
+        "backend:build": "cd backend && cargo build -r",
+        "build": "bun run backend:build && bun run frontend:build",
+        "frontend:start": "cd frontend && bun run start",
+        "backend:start": "cd backend && ./target/release/backend",
+        "start": "concurrently \"bun run backend:start\" \"bun run frontend:start\"",
+        "lint": "cd frontend && bun run lint"
+    },
+    "keywords": [
+        "manga"
+    ],
+    "author": "@yorunoken",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

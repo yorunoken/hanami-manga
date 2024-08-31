@@ -1,17 +1,11 @@
 {
-    "name": "hanami-manga",
+    "name": "frontend",
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev:next": "next dev",
-        "dev:rs": "cd backend && cargo run",
-        "dev": "concurrently \"bun run dev:rs\" \"bun run dev:next\"",
-        "build": "bun run build:rs && bun run build:next",
-        "build:rs": "cd backend && cargo build -r",
-        "build:next": "next build",
-        "start:rs": "cd backend && ./target/release/backend",
-        "start:next": "next start",
-        "start": "concurrently \"bun run start:rs\" \"bun run start:next\"",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
         "lint": "next lint"
     },
     "dependencies": {
