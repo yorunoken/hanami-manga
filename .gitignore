@@ -20,7 +20,8 @@ out/
 build
 
 # local env files
-.env*.local
+.env*
+!.env.example
 
 # Backend
 target
