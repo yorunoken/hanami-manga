@@ -1,14 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-    title: "Hanami Manga | Main Page",
-    description: "Dive into exciting new manga!",
-    keywords: ["manga", "manga reader", "hanami manga", "hanami"],
-};
+import { cn } from "@/lib/utils";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function RootLayout({
     children,
@@ -17,7 +12,25 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
+            <body
+                className={cn(
+                    "min-h-screen bg-background font-sans antialiased",
+                )}
+            >
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Header />
+                    <main className="mx-auto">
+                        {children}
+                        <Toaster />
+                    </main>
+                    <Footer />
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

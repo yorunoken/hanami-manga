@@ -1,48 +1,24 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import { MangaCategory } from "@/components/mangaCategory";
-import { BASE_URL } from "@/lib";
-
-async function fetchMangas() {
-    const limit = 5;
-
-    return {
-        recent: await fetch(
-            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${limit}`,
-        ).then((response) => response.json()),
-        topRated: await fetch(
-            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[rating]=desc&limit=${limit}`,
-        ).then((response) => response.json()),
-        topFollowed: await fetch(
-            `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[followedCount]=desc&limit=${limit}`,
-        ).then((response) => response.json()),
-    };
-}
+import { MangaCardSkeleton } from "@/components/MangaCardSkeleton";
+import { MangaCarousel, MANGAS, Titles } from "@/components/mangaCarousel";
+import { Suspense } from "react";
 
 export default async function MainPage() {
-    const { recent, topRated, topFollowed } = await fetchMangas();
-
     return (
-        <section className="w-full bg-[#1a1a1a]">
-            <Header />
-            <MangaCategory
-                title="Recently updated Manga"
-                redirect="/titles/recent"
-                mangas={recent}
-            />
+        <div className="my-4 px-4 lg:container mx-auto">
+            <Titles title="Recently updated Manga" redirect="/titles/recent" />
+            <Suspense fallback={MangaCardSkeleton()}>
+                <MangaCarousel mangaType={MANGAS.RECENT} />
+            </Suspense>
 
-            <MangaCategory
-                title="Top Rated Manga"
-                redirect="/titles/toprated"
-                mangas={topRated}
-            />
+            <Titles title="Top Rated Manga" redirect="/titles/toprated" />
+            <Suspense fallback={MangaCardSkeleton()}>
+                <MangaCarousel mangaType={MANGAS.TOPRATED} />
+            </Suspense>
 
-            <MangaCategory
-                title="Top Followed Manga"
-                redirect="/titles/topfollowed"
-                mangas={topFollowed}
-            />
-            <Footer />
-        </section>
+            <Titles title="Top Followed Manga" redirect="/titles/topfollowed" />
+            <Suspense fallback={MangaCardSkeleton()}>
+                <MangaCarousel mangaType={MANGAS.TOPFOLLOWED} />
+            </Suspense>
+        </div>
     );
 }

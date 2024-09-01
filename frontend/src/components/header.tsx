@@ -1,48 +1,62 @@
-import { ClipboardIcon } from "@/icons/clipboard";
-import { ClockIcon } from "@/icons/clock";
-import { HeartIcon } from "@/icons/heart";
-import { SearchIcon } from "@/icons/search";
+"use client";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export default function Header() {
     return (
-        <header className="bg-[#1e1e1e] text-white flex items-center justify-between px-6 py-3">
-            <Link href="/" className="font-bold text-xl" passHref>
-                Hanami Manga
-            </Link>
-            <div className="flex items-center gap-4">
-                <Link href="https://www.example.com" passHref>
-                    <Button className="text-white">
-                        <ClipboardIcon className="w-5 h-5" />
-                        <span className="sr-only">Go to Example</span>
-                    </Button>
-                </Link>
+        <header>
+            <div className="px-4 border-b lg:container mx-auto">
+                <div className="flex h-16 flex-row items-center">
+                    <Link href="/" className="font-bold text-xl" passHref>
+                        Hanami Manga
+                    </Link>
 
-                <Link href="https://www.example.com" passHref>
-                    <Button variant="ghost" size="icon" className="text-white">
-                        <ClockIcon className="w-5 h-5" />
-                        <span className="sr-only">History</span>
-                    </Button>
-                </Link>
+                    <div className="ml-auto flex flex-row items-center space-x-4">
+                        <ModeToggle />
 
-                <Link href="https://www.example.com" passHref>
-                    <Button variant="ghost" size="icon" className="text-white">
-                        <HeartIcon className="w-5 h-5" />
-                        <span className="sr-only">Favorites</span>
-                    </Button>
-                </Link>
-
-                <div className="relative">
-                    <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-white" />
-                    <Input
-                        type="search"
-                        placeholder="Search..."
-                        className="bg-[#2a2a2a] rounded-md pl-8 pr-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-white/50"
-                    />
+                        <div className="relative">
+                            <Input type="search" placeholder="Search..." />
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
+    );
+}
+
+export function ModeToggle() {
+    const { setTheme } = useTheme();
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }

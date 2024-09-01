@@ -20,7 +20,7 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
     return (
         <Link
             href={`/manga/${manga.id}`}
-            className="bg-[#2a2a2a] rounded-lg overflow-hidden"
+            className="bg-transparent rounded-lg overflow-hidden"
             prefetch={false}
         >
             <Image
@@ -34,11 +34,11 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
                     objectFit: "cover",
                 }}
             />
-            <div className="p-4">
-                <h3 className="text-lg font-bold text-white mb-2">
+            <div className="pt-1">
+                <h3 className="text-lg font-bold mb-2">
                     {title.length > 45 ? `${title.slice(0, 45)}...` : title}
                 </h3>
-                <p className="text-white text-sm line-clamp-2">
+                <p className="text-sm text-muted-foreground">
                     {description.length > 45
                         ? `${description.slice(0, 45)}...`
                         : description}

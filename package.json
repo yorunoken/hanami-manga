@@ -21,5 +21,8 @@
     "license": "ISC",
     "devDependencies": {
         "concurrently": "^8.2.2"
+    },
+    "dependencies": {
+        "next-themes": "^0.3.0"
     }
 }

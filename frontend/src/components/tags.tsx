@@ -1,15 +1,13 @@
 import { TagSchema } from "@/types/schema";
+import { Badge } from "@/components/ui/badge";
 
 export default function Tags({ tags }: { tags: Array<TagSchema> }) {
     return (
         <div className="flex flex-wrap gap-2">
             {tags.map((tag, index) => (
-                <span
-                    key={tag.attributes.name.en ?? index}
-                    className="px-3 py-1 rounded-full bg-muted/20 text-primary-foreground text-sm font-medium"
-                >
+                <Badge className="hover:cursor-default" key={index}>
                     {tag.attributes.name.en}
-                </span>
+                </Badge>
             ))}
         </div>
     );
