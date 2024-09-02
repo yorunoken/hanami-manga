@@ -50,7 +50,7 @@ where
     };
 
     match res.json::<T>().await {
-        Ok(ok) => reply::with_status(reply::json(&ok), StatusCode::IM_A_TEAPOT),
+        Ok(ok) => reply::with_status(reply::json(&ok), StatusCode::OK),
         Err(err) => {
             let mut e: &dyn std::error::Error = &err;
             println!("Main error: {e}");
