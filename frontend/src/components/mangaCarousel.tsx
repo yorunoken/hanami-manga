@@ -2,46 +2,11 @@ import { MangaListSchema } from "@/types/schema";
 import { MangaCard } from "./mangaCard";
 import Link from "next/link";
 import { BASE_URL } from "@/lib";
+import { TitleType } from "@/types";
+import { fetchSearchMangas } from "@/lib/request";
 
-export enum MANGAS {
-    RECENT,
-    TOPRATED,
-    TOPFOLLOWED,
-}
-
-async function fetchMangas(type: MANGAS) {
-    const limit = 5;
-
-    let data: MangaListSchema;
-
-    switch (type) {
-        case MANGAS.RECENT:
-            data = await fetch(
-                `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${limit}`,
-            ).then((response) => response.json());
-            break;
-        case MANGAS.TOPRATED:
-            data = await fetch(
-                `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[rating]=desc&limit=${limit}`,
-            ).then((response) => response.json());
-            break;
-        case MANGAS.TOPFOLLOWED:
-            data = await fetch(
-                `${BASE_URL}api/proxy/manga?includes[]=cover_art&order[followedCount]=desc&limit=${limit}`,
-            ).then((response) => response.json());
-            break;
-    }
-
-    return data;
-}
-
-export async function MangaCarousel({ mangaType }: { mangaType: MANGAS }) {
-    const mangas = await fetchMangas(mangaType);
-
-    if (!mangas.data) {
-        console.log(mangas);
-        console.log(mangaType);
-    }
+export async function MangaCarousel({ mangaType }: { mangaType: TitleType }) {
+    const mangas = await fetchSearchMangas(mangaType, 5);
 
     return (
         <div className="my-4 flex flex-col gap-8">
