@@ -1,6 +1,6 @@
 import Tags from "@/components/tags";
 import { Metadata } from "next";
-import { ChapterListSchema, MangaResponseSchema } from "@/types/schema";
+import { MangaResponseSchema } from "@/types/schema";
 import { BASE_URL } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,8 +71,10 @@ export async function MangaContent({ params }: Props) {
                     alt="Manga Cover"
                     width={400}
                     height={600}
-                    className="w-full max-w-[300px] h-fit md:max-w-none rounded-lg shadow-lg"
-                    style={{ aspectRatio: "400/600", objectFit: "cover" }}
+                    priority
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                    className="w-full max-w-[300px] h-auto md:max-w-none rounded-lg shadow-lg object-cover"
                 />
                 <div className="space-y-4">
                     <h1 className="text-4xl font-bold">{title}</h1>

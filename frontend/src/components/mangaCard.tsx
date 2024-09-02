@@ -27,12 +27,8 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
                 src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
                 alt="Manga Cover"
                 width={300}
-                height={400}
-                className="w-full h-[400px] object-cover"
-                style={{
-                    aspectRatio: "300/400",
-                    objectFit: "cover",
-                }}
+                height={1000}
+                className="w-full h-[400px] object-cover aspect-square"
             />
             <div className="pt-1">
                 <h3 className="text-lg font-bold mb-2">

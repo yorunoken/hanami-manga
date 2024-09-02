@@ -24,7 +24,7 @@ export function Pagination({
     return (
         <div
             className={
-                "flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2 " +
+                "flex flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-2 " +
                     className ?? ""
             }
         >

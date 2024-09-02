@@ -23,12 +23,14 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Header />
-                    <main className="mx-auto">
-                        {children}
-                        <Toaster />
-                    </main>
-                    <Footer />
+                    <div className="flex flex-col min-h-screen">
+                        <Header />
+                        <main className="flex-grow mx-auto">
+                            {children}
+                            <Toaster />
+                        </main>
+                        <Footer />
+                    </div>
                 </ThemeProvider>
             </body>
         </html>

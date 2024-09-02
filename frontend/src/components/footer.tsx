@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Footer() {
     return (
-        <footer>
+        <footer className="mt-auto">
             <div className="border-t lg:container mx-auto">
-                <div className="px-4 flex justify-between h-16 items-center">
+                <div className="px-4 flex flex-col sm:flex-row h-16 items-center">
                     <span className="font-bold text-sm">
                         © 2024 Hanami Manga. All rights reserved.
                     </span>

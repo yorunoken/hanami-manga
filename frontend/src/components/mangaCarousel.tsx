@@ -14,8 +14,6 @@ async function fetchMangas(type: MANGAS) {
 
     let data: MangaListSchema;
 
-    console.log(type);
-
     switch (type) {
         case MANGAS.RECENT:
             data = await fetch(
@@ -39,6 +37,11 @@ async function fetchMangas(type: MANGAS) {
 
 export async function MangaCarousel({ mangaType }: { mangaType: MANGAS }) {
     const mangas = await fetchMangas(mangaType);
+
+    if (!mangas.data) {
+        console.log(mangas);
+        console.log(mangaType);
+    }
 
     return (
         <div className="my-4 flex flex-col gap-8">
