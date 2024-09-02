@@ -8,6 +8,7 @@ dotenvy = "0.15.7"
 mangadex-api-schema-rust = { version = "0.9.0", features = ["serialize"] }
 reqwest = { version = "0.12.5", features = ["rustls-tls", "json"] }
 serde = { version = "1.0.206", features = ["derive"] }
+serde_json = "1.0.127"
 sqlx = { version = "0.8.1", features = ["sqlite", "json", "runtime-tokio"] }
 tokio = { version = "1.39.2", features = ["full"] }
 warp = "0.3.7"

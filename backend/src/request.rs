@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use reqwest::header::{CONTENT_TYPE, USER_AGENT};
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use warp::{http::StatusCode, reply, Reply};
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -10,10 +11,10 @@ pub struct Error {
     cat: String,
 }
 
-pub async fn json<T>(url: String, query: HashMap<String, String>) -> impl Reply
-where
-    T: serde::de::DeserializeOwned + serde::Serialize,
-{
+pub async fn json<T: serde::de::DeserializeOwned + serde::Serialize>(
+    url: String,
+    query: HashMap<String, String>,
+) -> impl Reply {
     let client = reqwest::Client::new();
 
     println!("full URL: {}", url);
@@ -49,7 +50,7 @@ where
         }
     };
 
-    match res.json::<T>().await {
+    match res.json::<Value>().await {
         Ok(ok) => reply::with_status(reply::json(&ok), StatusCode::OK),
         Err(err) => {
             let mut e: &dyn std::error::Error = &err;

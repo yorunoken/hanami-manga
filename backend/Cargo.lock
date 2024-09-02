@@ -70,6 +70,7 @@ dependencies = [
  "mangadex-api-schema-rust",
  "reqwest",
  "serde",
+ "serde_json",
  "sqlx",
  "tokio",
  "warp",
