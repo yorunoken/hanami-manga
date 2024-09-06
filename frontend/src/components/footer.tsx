@@ -1,6 +1,15 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+    const pathName = usePathname();
+    const pathsWithoutFooter = ["/chapter"];
+
+    if (pathsWithoutFooter.some((path) => pathName.startsWith(path))) {
+        return null;
+    }
+
     return (
         <footer className="mt-auto">
             <div className="border-t lg:container mx-auto">
@@ -9,7 +18,7 @@ export default function Footer() {
                         © 2024 Hanami Manga. All rights reserved.
                     </span>
                     <Link
-                        href="https://anime.lapaii.dev"
+                        href="https://mikanime.moe"
                         target="_blank"
                         className="text-sm font-medium hover:underline"
                         prefetch={false}
