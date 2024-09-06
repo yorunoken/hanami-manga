@@ -5,9 +5,9 @@ your cozy corner for discovering and reading your favorite manga! 🌸📚
 ## Features
 
 - **Browse Manga:** Explore a vast amount of mangas.
-- **Favorite Manga:** Save your favorite manga to easily find them later.
-- **Reading History:** Easily keep track of your history locally on your browser.
-- **Profiles:** Coming soon :)
+- **Favorite Manga:** Soon.
+- **Reading History:** Soon.
+- **Profiles:** Soon.
 - **Self-Hosted:** The website is self-hosted on Hetzner.
 
 ## Tech Stack
