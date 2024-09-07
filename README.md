@@ -35,43 +35,49 @@ Make sure you have the following installed:
    cd hanami-manga
    ```
 
-2. Install the front end dependencies:
+2. Set up root:
+    ```
+    npm install
+    ```
+
+3. Configure environment variables:
+
+    For the backend:
+        - Navigate to the `backend` folder
+        - Rename `.env.example` to `.env`
+        - Open `.env` and fill in your Discord bot token:
+        ```
+        PORT=8000
+        DATABASE_URL=sqlite://data.db
+        ```
+
+    For the frontend:
+        - Navigate to the `frontend` folder
+        - Rename `.env.example` to `.env`
+        - The default configuration should work, but you can modify if needed:
+        ```
+        BACKEND_PORT=8000
+        PORT=3000
+        ```
+        be sure to change the port value in `frontend/src/lib/index.ts` if you end up changing the port.
+
+4. Install the front end dependencies:
 
    ```bash
-   cd frontend && bun install
+   cd frontend && npm install
    ```
 
-### Environment Variables
+5. Build backend and frontend
+    ```
+    npm run build
+    ```
 
-Before running the application, you need to set up the following environment variables:
+### Usage
 
-There will be two `.env.example` files and you will need to rename them to `.env` before continuing, there will be one in `frontend` and one in `backend` and you'll need to fill them out accordingly.
-
-## Frontend's .env file
-
-- `BACKEND_PORT`: The port of your backend, this should be the same as the PORT in the .env file of your backend.
-
-```env
-BACKEND_PORT=port number
-```
-
-## Backend's .env file
-
-- `DATABASE_URL`: The URL of your database. I used `sqlite` for the backend so it should start with `sqlite://`, then followed by the name of your database at the root of the project. If you want to have postgres or anything else, feel free to shoot me a DM on Discord and I can work on a branch, or you could do it yourself :)
-- `PORT`: The port of your backend, this should be the same as the BACKEND_PORT in the .env file of your frontend.
-
-
-```env
-DATABASE_URL=
-PORT=
-```
-
-### Running the Application
-
-1. Start the server in dev mode:
+1. Start the server:
 
    ```bash
-   bun dev
+   npm run start
    ```
 
 2. Open your browser and navigate to `http://localhost:PORT` to see Hanami Manga in action!
