@@ -47,7 +47,7 @@ export default function TitlesPage({ params, searchParams }: Props) {
     );
 }
 
-export async function PageContent({
+async function PageContent({
     page,
     titleType,
 }: {
