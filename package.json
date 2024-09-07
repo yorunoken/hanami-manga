@@ -11,7 +11,7 @@
         "build": "bun run backend:build && bun run frontend:build",
         "frontend:start": "cd frontend && bun run start",
         "backend:start": "cd backend && ./target/release/backend",
-        "start": "bun backend:build && concurrently \"bun backend:start\" \"bun run frontend:build && bun run frontend:start\"",
+        "start": "concurrently \"bun run backend:start\" \"bun run frontend:start\"",
         "lint": "cd frontend && bun run lint"
     },
     "keywords": [
