@@ -1,6 +1,6 @@
 import Tags from "@/components/tags";
 import { Metadata } from "next";
-import { MangaListSchema, MangaResponseSchema } from "@/types/schema";
+import { Manga } from "@/types/schema";
 import { BASE_URL } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,10 +14,10 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { data: manga } = (await fetch(
-        `${BASE_URL}api/proxy/manga/${params.uuid}`,
+    const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
+        `${BASE_URL}/api/proxy/manga/${params.uuid}`,
         { next: { revalidate: 60 * 60 } },
-    ).then((response) => response.json())) as MangaResponseSchema;
+    ).then((response) => response.json());
 
     const title =
         manga.attributes.title.en ??
@@ -46,10 +46,10 @@ export default function MangaPage({ params }: Props) {
 export async function MangaContent({ params }: Props) {
     const chaptersPerPage = 12;
 
-    const { data: manga } = (await fetch(
-        `${BASE_URL}api/proxy/manga/${params.uuid}?includes[]=cover_art`,
+    const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
+        `${BASE_URL}/api/proxy/manga/${params.uuid}?includes[]=cover_art`,
         { next: { revalidate: 60 * 60 } },
-    ).then((response) => response.json())) as MangaResponseSchema;
+    ).then((response) => response.json());
 
     const relationshipAttributes = manga.relationships.find(
         (relationship) => relationship.type === "cover_art",

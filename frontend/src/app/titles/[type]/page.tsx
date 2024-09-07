@@ -1,10 +1,9 @@
 import { TitlePageCard, TitlePageSkeleton } from "@/components/titlePage";
 import { TitleType } from "@/types";
 import { ArrowLeft } from "lucide-react";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { fetchSearchMangas } from "@/lib/request";
-import { Pagination } from "@/components/pagination";
 import PaginationWrapper from "@/components/paginationWrapper";
 
 type Props = {
@@ -57,7 +56,6 @@ export async function PageContent({
 }) {
     const mangas = await fetchSearchMangas(titleType, 20, (page - 1) * 20);
     const totalPages = Math.ceil(Math.min(mangas.total, 10000) / 20);
-    console.log(mangas.total);
 
     let title = "";
     switch (titleType) {
