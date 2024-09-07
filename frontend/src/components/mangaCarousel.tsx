@@ -1,7 +1,5 @@
-import { MangaListSchema } from "@/types/schema";
 import { MangaCard } from "./mangaCard";
 import Link from "next/link";
-import { BASE_URL } from "@/lib";
 import { TitleType } from "@/types";
 import { fetchSearchMangas } from "@/lib/request";
 
