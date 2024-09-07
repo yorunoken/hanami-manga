@@ -43,7 +43,7 @@ export default function MangaPage({ params }: Props) {
     );
 }
 
-export async function MangaContent({ params }: Props) {
+async function MangaContent({ params }: Props) {
     const chaptersPerPage = 12;
 
     const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
