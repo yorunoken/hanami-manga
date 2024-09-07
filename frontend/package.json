@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "dotenv -e .env -- next dev -p $PORT",
+        "dev": "dotenv -e .env -- next dev",
         "build": "next build",
-        "start": "dotenv -e .env -- next start -p $PORT",
+        "start": "dotenv -e .env -- next start",
         "lint": "next lint"
     },
     "dependencies": {
