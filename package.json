@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "our cozy corner for discovering and reading your favorite manga! 🌸📚",
     "scripts": {
-        "setup": "bun build:backend && concurrently \"bun backend:start\" \"bun run build:frontend && bun run frontend:start\"",
         "frontend:dev": "cd frontend && bun run dev",
         "backend:dev": "cd backend && cargo run",
         "dev": "concurrently \"bun run backend:dev\" \"bun run frontend:dev\"",
@@ -12,7 +11,7 @@
         "build": "bun run backend:build && bun run frontend:build",
         "frontend:start": "cd frontend && bun run start",
         "backend:start": "cd backend && ./target/release/backend",
-        "start": "concurrently \"bun run backend:start\" \"bun run frontend:start\"",
+        "start": "bun backend:build && concurrently \"bun backend:start\" \"bun run frontend:build && bun run frontend:start\"",
         "lint": "cd frontend && bun run lint"
     },
     "keywords": [
