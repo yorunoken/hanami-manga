@@ -37,7 +37,7 @@ Make sure you have the following installed:
 
 2. Set up root:
     ```
-    npm install
+    bun install
     ```
 
 3. Configure environment variables:
@@ -64,12 +64,12 @@ Make sure you have the following installed:
 4. Install the front end dependencies:
 
    ```bash
-   cd frontend && npm install
+   cd frontend && bun install
    ```
 
 5. Build backend and frontend
     ```
-    npm run build
+    bun run build
     ```
 
 ### Usage
@@ -77,7 +77,7 @@ Make sure you have the following installed:
 1. Start the server:
 
    ```bash
-   npm run start
+   bun run start
    ```
 
 2. Open your browser and navigate to `http://localhost:PORT` to see Hanami Manga in action!
