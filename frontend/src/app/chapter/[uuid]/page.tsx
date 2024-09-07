@@ -26,7 +26,7 @@ async function getData(uuid: string) {
     ).then((res) => res.json());
 
     const chapterImagesData: AtHome.GetAtHomeServerChapterId.ResponseBody =
-        await fetch(`${BACKEND_URL}/api/proxy/homeserver/${uuid}`).then((res) =>
+        await fetch(`${BACKEND_URL}/api/homeserver/${uuid}`).then((res) =>
             res.json(),
         );
 
