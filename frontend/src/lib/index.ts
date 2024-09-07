@@ -1,1 +1,1 @@
-export const BASE_URL = `http://localhost:${process.env.PORT}`;
+export const BASE_URL = `http://localhost:3007`;

@@ -60,8 +60,8 @@ export async function ChapterPageContent({ params }: Props) {
         chapter.data.attributes.chapter || "0",
     );
 
-    const sortedChapters = Object.entries(chapters.volumes)
-        .flatMap(([_, volume]) => Object.entries(volume.chapters))
+    const sortedChapters = Object.entries(chapters.volumes ?? {})
+        .flatMap(([_, volume]) => Object.entries(volume.chapters ?? {}))
         .sort(([a], [b]) => parseFloat(a) - parseFloat(b));
 
     const firstChapter = sortedChapters[0]?.[1];
