@@ -1,6 +1,6 @@
 import { TitleType } from "@/types";
 import { MangaListSchema } from "@/types/schema";
-import { BACKEND_URL, BASE_URL } from ".";
+import { BACKEND_URL } from ".";
 
 export async function fetchSearchMangas(
     type: TitleType,
