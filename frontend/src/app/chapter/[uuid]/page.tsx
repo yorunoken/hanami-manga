@@ -52,7 +52,7 @@ export default function ChapterPage({ params }: Props) {
     );
 }
 
-export async function ChapterPageContent({ params }: Props) {
+async function ChapterPageContent({ params }: Props) {
     const { uuid } = params;
     const { pageImages, manga, chapter, chapters } = await getData(uuid);
 
