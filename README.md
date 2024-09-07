@@ -59,7 +59,6 @@ Make sure you have the following installed:
         BACKEND_PORT=8000
         PORT=3000
         ```
-        be sure to change the port value in `frontend/src/lib/index.ts` if you end up changing the port.
 
 4. Install the front end dependencies:
 
