@@ -74,7 +74,6 @@ async function MangaContent({ params }: Props) {
                 alt="Manga Cover"
                 width={900}
                 height={900}
-                priority
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
                 className="h-auto object-cover aspect-[5/8] rounded"

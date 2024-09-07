@@ -26,7 +26,6 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
             prefetch={false}
         >
             <Image
-                priority
                 src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
                 alt="Manga Cover"
                 width={300}
