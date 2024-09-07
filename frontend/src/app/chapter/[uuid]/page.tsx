@@ -6,7 +6,7 @@ import {
     ChevronsLeftIcon,
     ChevronsRightIcon,
 } from "lucide-react";
-import { BASE_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib";
 import { AtHome, Manga, Chapter } from "@/types/schema";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -14,19 +14,19 @@ import ChapterPageSkeleton from "@/components/chapterPageSkeleton";
 
 async function getData(uuid: string) {
     const chapterData: Chapter.GetChapterId.ResponseBody = await await fetch(
-        `${BASE_URL}/api/proxy/chapter/${uuid}?includes[]=manga&includes[]=author&includes[]=artist`,
+        `${BACKEND_URL}/api/chapter/${uuid}?includes[]=manga&includes[]=author&includes[]=artist`,
     ).then((res) => res.json());
 
     const mangaData: Manga.GetMangaId.ResponseBody = await fetch(
-        `${BASE_URL}/api/proxy/manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}?includes[]=cover_art&includes[]=author&includes[]=artist`,
+        `${BACKEND_URL}/api/manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}?includes[]=cover_art&includes[]=author&includes[]=artist`,
     ).then((res) => res.json());
 
     const totalChaptersData: Manga.GetMangaAggregate.ResponseBody = await fetch(
-        `${BASE_URL}/api/proxy/manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}/aggregate?translatedLanguage[]=en`,
+        `${BACKEND_URL}/api/manga/${chapterData.data.relationships.find((relationship) => relationship.type === "manga")?.id}/aggregate?translatedLanguage[]=en`,
     ).then((res) => res.json());
 
     const chapterImagesData: AtHome.GetAtHomeServerChapterId.ResponseBody =
-        await fetch(`${BASE_URL}/api/proxy/homeserver/${uuid}`).then((res) =>
+        await fetch(`${BACKEND_URL}/api/proxy/homeserver/${uuid}`).then((res) =>
             res.json(),
         );
 

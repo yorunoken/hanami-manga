@@ -1,7 +1,7 @@
 import Tags from "@/components/tags";
 import { Metadata } from "next";
 import { Manga } from "@/types/schema";
-import { BASE_URL } from "@/lib";
+import { BACKEND_URL } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
 import ChapterList from "@/components/chapterList";
@@ -15,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
-        `${BASE_URL}/api/proxy/manga/${params.uuid}`,
+        `${BACKEND_URL}/api/manga/${params.uuid}`,
         { next: { revalidate: 60 * 60 } },
     ).then((response) => response.json());
 
@@ -47,7 +47,7 @@ async function MangaContent({ params }: Props) {
     const chaptersPerPage = 12;
 
     const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
-        `${BASE_URL}/api/proxy/manga/${params.uuid}?includes[]=cover_art`,
+        `${BACKEND_URL}/api/manga/${params.uuid}?includes[]=cover_art`,
         { next: { revalidate: 60 * 60 } },
     ).then((response) => response.json());
 

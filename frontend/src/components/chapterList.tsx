@@ -1,5 +1,4 @@
 "use client";
-import { BASE_URL } from "@/lib";
 import { Chapter, ChapterSchema } from "@/types/schema";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -24,7 +23,7 @@ export default function ChapterList({
     useEffect(() => {
         async function fetchChapters(page: number) {
             const response: Chapter.GetChapter.ResponseBody = await fetch(
-                `${BASE_URL}/api/proxy/chapter?manga=${mangaId}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(page - 1) * chaptersPerPage}`,
+                `/api/proxy/chapter?manga=${mangaId}&order[chapter]=desc&translatedLanguage[]=en&limit=${chaptersPerPage}&offset=${(page - 1) * chaptersPerPage}`,
             ).then((res) => res.json());
 
             setChapters(response.data);
