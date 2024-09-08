@@ -1,6 +1,6 @@
 # Hanami Manga
 
-your cozy corner for discovering and reading your favorite manga! 🌸📚
+Your cozy corner for reading your favorite manga! 🌸📚
 
 ## Features
 
