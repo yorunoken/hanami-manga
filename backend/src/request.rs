@@ -35,7 +35,7 @@ pub async fn json<T: serde::de::DeserializeOwned + serde::Serialize>(
         Err(e) => {
             let error_code = e
                 .status()
-                .unwrap_or(reqwest::StatusCode::EXPECTATION_FAILED)
+                .unwrap_or(reqwest::StatusCode::INTERNAL_SERVER_ERROR)
                 .as_u16();
 
             let error = Error {
@@ -45,7 +45,7 @@ pub async fn json<T: serde::de::DeserializeOwned + serde::Serialize>(
 
             return reply::with_status(
                 reply::json(&error),
-                StatusCode::from_u16(error_code).unwrap_or(StatusCode::NOT_ACCEPTABLE),
+                StatusCode::from_u16(error_code).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR),
             );
         }
     };
@@ -65,7 +65,7 @@ pub async fn json<T: serde::de::DeserializeOwned + serde::Serialize>(
                 text: format!("Couldn't deserialize JSON: {}", err),
                 cat: String::from("http.cat/418.jpg"),
             };
-            reply::with_status(reply::json(&error), StatusCode::IM_A_TEAPOT)
+            reply::with_status(reply::json(&error), StatusCode::INTERNAL_SERVER_ERROR)
         }
     }
 }
