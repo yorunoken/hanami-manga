@@ -13,19 +13,19 @@ export default function Footer() {
     return (
         <footer className="mt-auto">
             <div className="border-t lg:container mx-auto">
-                <div className="px-4 justify-between  flex flex-col sm:flex-row h-16 items-center">
-                    <span className="font-bold text-sm">
+                <div className="px-4 py-6 flex flex-col items-center space-y-2 sm:space-y-0 sm:flex-row sm:justify-between">
+                    <span className="font-bold text-sm text-center sm:text-left">
                         © 2024 Hanami Manga. All rights reserved.
                     </span>
                     <Link
                         href="https://mikanime.moe"
                         target="_blank"
-                        className="text-sm font-medium hover:underline"
+                        className="text-sm font-medium hover:underline text-center sm:text-left"
                         prefetch={false}
                     >
                         Check out mikanime, the anime version of this website!
                     </Link>
-                    <div className="flex items-center gap-4 text-sm">
+                    <div className="flex flex-wrap justify-center sm:justify-end items-center gap-4 text-sm">
                         <Link
                             href="/about"
                             className="hover:underline"

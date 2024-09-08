@@ -33,12 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function MangaPage({ params }: Props) {
     return (
-        <div className="my-8 px-4 lg:container mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <Suspense fallback={<MangaPageSkeleton />}>
-                    <MangaContent params={params} />
-                </Suspense>
-            </div>
+        <div className="my-4 sm:my-8 px-4 max-w-5xl mx-auto">
+            <Suspense fallback={<MangaPageSkeleton />}>
+                <MangaContent params={params} />
+            </Suspense>
         </div>
     );
 }
@@ -68,25 +66,31 @@ async function MangaContent({ params }: Props) {
     const tags = manga.attributes.tags;
 
     return (
-        <>
-            <Image
-                src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
-                alt="Manga Cover"
-                width={900}
-                height={900}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
-                className="h-auto object-cover aspect-[5/8] rounded"
-            />
-            <div className="space-y-4">
-                <h1 className="text-4xl font-bold">{title}</h1>
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+            <div className="w-full md:w-1/3">
+                <Image
+                    src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
+                    alt="Manga Cover"
+                    width={900}
+                    height={900}
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                    className="w-full h-auto object-cover aspect-[5/8] rounded"
+                />
+            </div>
+            <div className="w-full md:w-2/3 space-y-4">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                    {title}
+                </h1>
                 <Tags tags={tags} />
-                <p className="text-muted-foreground">{description}</p>
-                <div className="flex items-center gap-4">
-                    <Button>
+                <p className="text-sm sm:text-base text-muted-foreground">
+                    {description}
+                </p>
+                <div className="flex flex-wrap items-center gap-4">
+                    <Button className="w-full sm:w-auto">
                         <Link href="#">Read Now</Link>
                     </Button>
-                    <Button>
+                    <Button className="w-full sm:w-auto">
                         <Link href="#">Add to Favorites</Link>
                     </Button>
                 </div>
@@ -95,6 +99,6 @@ async function MangaContent({ params }: Props) {
                     mangaId={params.uuid}
                 />
             </div>
-        </>
+        </div>
     );
 }

@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default async function MainPage() {
     return (
-        <div className="my-4 px-4 lg:container mx-auto">
+        <div className="my-4">
             <Titles title="Latest Updated Manga" redirect="/titles/recent" />
             <Suspense fallback={<MangaCardSkeleton />}>
                 <MangaCarousel mangaType={TitleType.RECENT} />
