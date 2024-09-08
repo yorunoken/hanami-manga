@@ -53,9 +53,7 @@ pub async fn get_chapter_collection(
     Ok(request::json::<ChapterCollection>(full_url, query).await)
 }
 
-pub async fn proxy_image(
-    query: std::collections::HashMap<String, String>,
-) -> Result<impl Reply, Rejection> {
+pub async fn proxy_image(query: HashMap<String, String>) -> Result<impl Reply, Rejection> {
     if let Some(url) = query.get("url") {
         println!("{}", url);
         let client = reqwest::Client::new();
