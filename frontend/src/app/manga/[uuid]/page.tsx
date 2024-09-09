@@ -1,6 +1,6 @@
 import Tags from "@/components/tags";
 import { Metadata } from "next";
-import { Manga } from "@/types/schema";
+import { CoverAttributesSchema, Manga } from "@/types/schema";
 import { BACKEND_URL } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,7 +51,7 @@ async function MangaContent({ params }: Props) {
 
     const relationshipAttributes = manga.relationships.find(
         (relationship) => relationship.type === "cover_art",
-    )?.attributes as { fileName?: string } | null;
+    )?.attributes as CoverAttributesSchema | undefined;
 
     const title =
         manga.attributes.title.en ??
