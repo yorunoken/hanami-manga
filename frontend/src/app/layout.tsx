@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Head from "next/head";
+import Script from "next/script";
 
 export default function RootLayout({
     children,
@@ -12,6 +14,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <Head>
+                <Script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3511683752810096"
+                    crossOrigin="anonymous"
+                />
+            </Head>
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",
