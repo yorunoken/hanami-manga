@@ -6,26 +6,19 @@ export async function fetchSearchMangas(
     type: TitleType,
     limit: number = 5,
     offset?: number,
-) {
-    let data: MangaListSchema;
-
+): Promise<MangaListSchema> {
+    let url = `${BACKEND_URL}/api/manga?includes=cover_art,author&limit=${limit}${offset ? `&offset=${offset}` : ""}`;
     switch (type) {
         case TitleType.RECENT:
-            data = await fetch(
-                `${BACKEND_URL}/api/manga?includes[]=cover_art&order[latestUploadedChapter]=desc&limit=${limit}${offset ? `&offset=${offset}` : ""}`,
-            ).then((response) => response.json());
+            url += "&order[latestUploadedChapter]=desc";
             break;
         case TitleType.TOPRATED:
-            data = await fetch(
-                `${BACKEND_URL}/api/manga?includes[]=cover_art&order[rating]=desc&limit=${limit}${offset ? `&offset=${offset}` : ""}`,
-            ).then((response) => response.json());
+            url += "&order[rating]=desc";
             break;
         case TitleType.TOPFOLLOWED:
-            data = await fetch(
-                `${BACKEND_URL}/api/manga?includes[]=cover_art&order[followedCount]=desc&limit=${limit}${offset ? `&offset=${offset}` : ""}`,
-            ).then((response) => response.json());
+            url += "&order[followedCount]=desc";
             break;
     }
 
-    return data;
+    return fetch(url).then((res) => res.json());
 }
