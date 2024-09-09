@@ -9,11 +9,12 @@ export async function GET(request: NextRequest) {
     const path = pathname.replace("/api/proxy/", "");
 
     const url = new URL(`http://localhost:${backendPort}/api/${path}`);
-    console.log("proxying API url: " + url);
 
     searchParams.forEach((value, key) => {
         url.searchParams.append(key, value);
     });
+
+    console.log("proxying API url: " + url);
 
     const response = await fetch(url);
     const contentType = response.headers.get("content-type");
