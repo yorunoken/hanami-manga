@@ -16,12 +16,6 @@ export default function PaginationWrapper({
     titleType,
 }: PaginationWrapperProps) {
     const router = useRouter();
-    console.log("hi");
-    console.log({
-        currentPage,
-        totalPages,
-        titleType,
-    });
 
     function handlePageChange(newPage: number) {
         router.push(`/titles/${titleType.toLowerCase()}?page=${newPage}`);
