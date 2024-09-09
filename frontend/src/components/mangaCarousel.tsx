@@ -8,7 +8,7 @@ export async function MangaCarousel({ mangaType }: { mangaType: TitleType }) {
 
     return (
         <div className="my-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 {mangas.data.map((manga) => (
                     <MangaCard key={manga.id} manga={manga} />
                 ))}

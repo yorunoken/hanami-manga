@@ -1,4 +1,4 @@
-import type { MangaSchema } from "@/types/schema";
+import type { CoverAttributesSchema, MangaSchema } from "@/types/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import Image from "next/image";
@@ -7,7 +7,7 @@ import Link from "next/link";
 export function MangaCard({ manga }: { manga: MangaSchema }) {
     const relationshipAttributes = manga.relationships.find(
         (relationship) => relationship.type === "cover_art",
-    )?.attributes as { fileName?: string } | null;
+    )?.attributes as CoverAttributesSchema | undefined;
 
     const title =
         manga.attributes.title.en ??
@@ -20,11 +20,12 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
         manga.attributes.description.en ?? "No description available.";
 
     return (
-        <Link
-            href={`/manga/${manga.id}`}
-            className="bg-transparent rounded-lg overflow-hidden"
-            prefetch={false}
-        >
+        <div className="p-3 space-y-2 relative group bg-transparent rounded-lg overflow-hidden transition-all duration-200 ease-in-out hover:bg-primary-foreground hover:shadow-md">
+            <Link
+                href={`/manga/${manga.id}`}
+                className="absolute inset-0 z-10"
+                prefetch={false}
+            />
             <Image
                 src={`/api/proxy/proxyimage?url=https://mangadex.org/covers/${manga.id}/${relationshipAttributes?.fileName}`}
                 alt="Manga Cover"
@@ -32,19 +33,19 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
                 height={1000}
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
-                className="h-auto object-cover aspect-[5/8]"
+                className="h-auto z-20 object-cover aspect-[5/8] rounded"
             />
-            <div className="pt-1">
-                <h3 className="text-lg font-bold mb-2">
+            <div>
+                <h3 className="relative text-lg font-bold mb-2 z-20">
                     {title.length > 45 ? `${title.slice(0, 45)}...` : title}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="relative text-sm text-muted-foreground z-20">
                     {description.length > 45
                         ? `${description.slice(0, 45)}...`
                         : description}
                 </p>
             </div>
-        </Link>
+        </div>
     );
 }
 
