@@ -8,6 +8,7 @@ import ChapterList from "@/components/chapterList";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
 import { Book } from "lucide-react";
+import { cookies } from "next/headers";
 
 import MangaPageSkeleton from "@/components/manga/skeleton";
 
@@ -34,16 +35,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function MangaPage({ params }: Props) {
+    const cookieStore = cookies();
+    const lastReadChapterCookie = cookieStore.get(
+        `lastReadChapterManga_${params.uuid}`,
+    );
+    const lastReadChapter = lastReadChapterCookie?.value;
+
+    console.log(lastReadChapter);
+
     return (
         <div className="my-4 sm:my-8 px-4 max-w-5xl mx-auto">
             <Suspense fallback={<MangaPageSkeleton />}>
-                <MangaContent params={params} />
+                <MangaContent
+                    params={params}
+                    lastReadChapter={lastReadChapter}
+                />
             </Suspense>
         </div>
     );
 }
 
-async function MangaContent({ params }: Props) {
+async function MangaContent({
+    params,
+    lastReadChapter,
+}: Props & { lastReadChapter: string | undefined }) {
     const chaptersPerPage = 12;
 
     const { data: manga }: Manga.GetMangaId.ResponseBody = await fetch(
@@ -89,12 +104,19 @@ async function MangaContent({ params }: Props) {
                     {description}
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
-                    <Button className="w-full sm:w-auto">
-                        <Link href="#" className="flex flex-row items-center ">
+                    <Link
+                        href={`/manga/${manga.id}/read`}
+                        className="flex flex-row items-center "
+                    >
+                        <Button className="w-full sm:w-auto">
                             <Book className="h-5 w-5 mr-1" />
-                            <span className="font-semibold">Read Now</span>
-                        </Link>
-                    </Button>
+                            <span className="font-semibold">
+                                {lastReadChapter
+                                    ? `Continue Reading`
+                                    : "Read Now"}
+                            </span>
+                        </Button>
+                    </Link>
                 </div>
                 <ChapterList
                     chaptersPerPage={chaptersPerPage}
