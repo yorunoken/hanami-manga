@@ -1,10 +1,12 @@
-import { TitlePageCard, TitlePageSkeleton } from "@/components/titlePage";
 import { TitleType } from "@/types";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { fetchSearchMangas } from "@/lib/request";
 import PaginationWrapper from "@/components/paginationWrapper";
+
+import TitlePageCard from "@/components/titles/card";
+import TitlePageSkeleton from "@/components/titles/skeleton";
 
 type Props = {
     params: {

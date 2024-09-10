@@ -1,9 +1,9 @@
-import { MangaCard } from "./mangaCard";
+import { Card } from "@/components/main/card";
 import Link from "next/link";
 import { TitleType } from "@/types";
 import { fetchSearchMangas } from "@/lib/request";
 
-export async function MangaCarousel({ mangaType }: { mangaType: TitleType }) {
+export async function Carousel({ mangaType }: { mangaType: TitleType }) {
     const mangas = await fetchSearchMangas(mangaType, 5);
 
     console.log(mangas);
@@ -12,7 +12,7 @@ export async function MangaCarousel({ mangaType }: { mangaType: TitleType }) {
         <div className="my-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 {mangas.data.map((manga) => (
-                    <MangaCard key={manga.id} manga={manga} />
+                    <Card key={manga.id} manga={manga} />
                 ))}
             </div>
         </div>

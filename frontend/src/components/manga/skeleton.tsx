@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export async function MangaPageSkeleton() {
+export default async function MangaPageSkeleton() {
     return (
         <>
             <Skeleton className="h-[600px] w-[400px] rounded-lg" />

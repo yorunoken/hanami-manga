@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 
-export function MangaCard({ manga }: { manga: MangaSchema }) {
+export function Card({ manga }: { manga: MangaSchema }) {
     const relationshipAttributes = manga.relationships.find(
         (relationship) => relationship.type === "cover_art",
     )?.attributes as CoverAttributesSchema | undefined;
@@ -49,7 +49,7 @@ export function MangaCard({ manga }: { manga: MangaSchema }) {
     );
 }
 
-export function MangaCardSkeleton() {
+export function CardSkeleton() {
     return (
         <div className="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {Array.from({ length: 5 }).map((_, index) => (
