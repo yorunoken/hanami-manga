@@ -95,7 +95,7 @@ async function ChapterPageContent({ params }: Props) {
         "Unknown Title";
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-4 md:px-0">
             <ChapterTracker
                 mangaId={manga.data.id}
                 chapterId={chapter.data.id}
@@ -105,20 +105,20 @@ async function ChapterPageContent({ params }: Props) {
                     href={`/manga/${manga.data.id}`}
                     className="absolute left-0 top-1/2 transform -translate-y-1/2"
                 >
-                    <Button variant="secondary">
-                        <ChevronLeftIcon className="w-8 h-8" />
+                    <Button variant="secondary" className="p-2">
+                        <ChevronLeftIcon className="w-6 h-6" />
                     </Button>
                 </Link>
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold">
+                    <h1 className="text-xl md:text-2xl font-bold">
                         {title}: Chapter {chapter.data.attributes.chapter}
                     </h1>
-                    <span className="text-muted-foreground">
+                    <span className="text-sm md:text-base text-muted-foreground">
                         {chapter.data.attributes.title}
                     </span>
                 </div>
             </div>
-            <div className="max-w-3xl mx-auto py-4 space-y-3">
+            <div className="w-full py-4 space-y-3">
                 {pageImages.chapter?.data?.map((imageData, index) => (
                     <div className="relative w-full" key={index}>
                         <ChapterImage
@@ -129,9 +129,9 @@ async function ChapterPageContent({ params }: Props) {
                     </div>
                 ))}
             </div>
-            <div className="w-full flex mb-4">
-                <Link href={`/chapter/${firstChapter?.id}`} className="flex">
-                    <Button className="w-full bg-blue-400 hover:bg-blue-500 rounded-r-none border-r">
+            <div className="w-full flex mb-4 flex-wrap gap-2">
+                <Link href={`/chapter/${firstChapter?.id}`} className="flex-1">
+                    <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white p-2">
                         <ChevronsLeftIcon className="mx-auto" />
                     </Button>
                 </Link>
@@ -141,7 +141,7 @@ async function ChapterPageContent({ params }: Props) {
                         href={`/chapter/${previousChapter.id}`}
                         className="flex-1"
                     >
-                        <Button className="w-full bg-blue-400 hover:bg-blue-500 rounded-none border-r">
+                        <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white p-2">
                             <ChevronLeftIcon className="mx-auto" />
                         </Button>
                     </Link>
@@ -152,15 +152,18 @@ async function ChapterPageContent({ params }: Props) {
                         href={`/chapter/${nextChapter.id}`}
                         className="flex-1"
                     >
-                        <Button className="w-full bg-blue-400 hover:bg-blue-500 rounded-none border-l">
+                        <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white p-2">
                             <ChevronRightIcon className="mx-auto" />
                         </Button>
                     </Link>
                 )}
 
                 {!isLastChapter && (
-                    <Link href={`/chapter/${lastChapter?.id}`} className="flex">
-                        <Button className="w-full bg-blue-400 hover:bg-blue-500 rounded-l-none border-l">
+                    <Link
+                        href={`/chapter/${lastChapter?.id}`}
+                        className="flex-1"
+                    >
+                        <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white p-2">
                             <ChevronsRightIcon className="mx-auto" />
                         </Button>
                     </Link>
@@ -168,7 +171,7 @@ async function ChapterPageContent({ params }: Props) {
 
                 {isLastChapter && (
                     <Link href={`/manga/${manga.data.id}`} className="flex-1">
-                        <Button className="w-full bg-green-400 hover:bg-green-500 rounded-l-none border-l">
+                        <Button className="w-full bg-green-400 hover:bg-green-500 text-white p-2">
                             Go to Title Page
                         </Button>
                     </Link>
@@ -188,7 +191,7 @@ function ChapterImage({
     hash: string;
 }) {
     return (
-        <div className="flex max-w-[100vw] flex-col md:max-w-[75vw] lg:max-w-[50vw]">
+        <div className="flex w-full flex-col items-center">
             <Image
                 alt="Loading..."
                 width={1000}
@@ -196,7 +199,7 @@ function ChapterImage({
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
                 src={`/api/proxy/proxyimage?url=${baseUrl}/data/${hash}/${imageData}`}
-                className="h-auto w-full"
+                className="h-auto w-full max-w-full md:max-w-[75%] lg:max-w-[60%] xl:max-w-[50%]"
             />
         </div>
     );
