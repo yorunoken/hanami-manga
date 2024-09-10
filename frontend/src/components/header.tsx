@@ -9,12 +9,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Moon, Sun, HeartIcon, Settings } from "lucide-react";
+import { Moon, Sun, HeartIcon, Settings, UserRound } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 
 export default function Header() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
 
     return (
         <header className="sticky top-0 z-50 bg-background">
@@ -22,10 +23,12 @@ export default function Header() {
                 <div className="flex h-16 items-center justify-between">
                     <div className="flex items-center">
                         <Button
-                            variant="ghost"
+                            variant="outline"
                             size="icon"
                             className="mr-2 md:hidden"
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            onClick={() =>
+                                setIsMobileMenuOpen(!isMobileMenuOpen)
+                            }
                         >
                             <Menu className="h-5 w-5" />
                             <span className="sr-only">Toggle menu</span>
@@ -44,41 +47,97 @@ export default function Header() {
                                 className="w-[200px] lg:w-[300px]"
                             />
                         </div>
+                        <DesktopMenu className="md:flex hidden" />
                     </div>
                 </div>
             </div>
-            {isMenuOpen && (
-                <div className="px-4 py-2 border-b md:hidden">
-                    <Input
-                        type="search"
-                        placeholder="Search..."
-                        className="w-full mb-2"
-                    />
-                    <nav>
-                        <ul className="space-y-2">
-                            <li>
-                                <Link
-                                    href="/favorites"
-                                    className="flex flex-row items-center py-2 hover:text-primary"
-                                >
-                                    <HeartIcon className="h-4 w-4 mr-1" />
-                                    Favorites
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/settings"
-                                    className="flex flex-row items-center py-2 hover:text-primary"
-                                >
-                                    <Settings className="h-4 w-4 mr-1" />
-                                    Settings
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            )}
+            {isMobileMenuOpen && <MobileMenu />}
         </header>
+    );
+}
+
+function DesktopMenu({ className = "" }) {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon" className={className}>
+                    <Menu className="h-5 w-5" />
+                    <span className="sr-only">Open menu</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                    <Link
+                        href="/profile"
+                        className="flex items-center cursor-pointer"
+                    >
+                        <UserRound className="h-4 w-4 mr-2" />
+                        Profile
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <Link
+                        href="/favorites"
+                        className="flex items-center cursor-pointer"
+                    >
+                        <HeartIcon className="h-4 w-4 mr-2" />
+                        Favorites
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <Link
+                        href="/settings"
+                        className="flex items-center cursor-pointer"
+                    >
+                        <Settings className="h-4 w-4 mr-2" />
+                        Settings
+                    </Link>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
+}
+
+function MobileMenu() {
+    return (
+        <div className="px-4 py-2 border-b md:hidden">
+            <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full mb-2"
+            />
+            <nav>
+                <ul className="space-y-2">
+                    <li>
+                        <Link
+                            href="/settings"
+                            className="flex flex-row items-center py-2 hover:text-primary"
+                        >
+                            <UserRound className="h-4 w-4 mr-1" />
+                            Profile
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/favorites"
+                            className="flex flex-row items-center py-2 hover:text-primary"
+                        >
+                            <HeartIcon className="h-4 w-4 mr-1" />
+                            Favorites
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/settings"
+                            className="flex flex-row items-center py-2 hover:text-primary"
+                        >
+                            <Settings className="h-4 w-4 mr-1" />
+                            Settings
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     );
 }
 
