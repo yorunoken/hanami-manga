@@ -7,7 +7,9 @@ import Link from "next/link";
 import ChapterList from "@/components/chapterList";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
-import { MangaPageSkeleton } from "@/components/mangaPageSkeleton";
+import { Book } from "lucide-react";
+
+import MangaPageSkeleton from "@/components/manga/skeleton";
 
 type Props = {
     params: { uuid: string };
@@ -88,10 +90,10 @@ async function MangaContent({ params }: Props) {
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
                     <Button className="w-full sm:w-auto">
-                        <Link href="#">Read Now</Link>
-                    </Button>
-                    <Button className="w-full sm:w-auto">
-                        <Link href="#">Add to Favorites</Link>
+                        <Link href="#" className="flex flex-row items-center ">
+                            <Book className="h-5 w-5 mr-1" />
+                            <span className="font-semibold">Read Now</span>
+                        </Link>
                     </Button>
                 </div>
                 <ChapterList

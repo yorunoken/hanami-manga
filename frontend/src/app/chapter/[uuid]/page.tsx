@@ -10,7 +10,9 @@ import { BACKEND_URL } from "@/lib";
 import { AtHome, Manga, Chapter } from "@/types/schema";
 import Link from "next/link";
 import { Suspense } from "react";
-import ChapterPageSkeleton from "@/components/chapterPageSkeleton";
+
+import ChapterPageSkeleton from "@/components/chapter/skeleton";
+import ChapterTracker from "@/components/chapter/tracker";
 
 async function getData(uuid: string) {
     const chapterData: Chapter.GetChapterId.ResponseBody = await await fetch(
@@ -94,6 +96,10 @@ async function ChapterPageContent({ params }: Props) {
 
     return (
         <div className="flex flex-col items-center">
+            <ChapterTracker
+                mangaId={manga.data.id}
+                chapterId={chapter.data.id}
+            />
             <div className="mt-4 flex flex-col items-center relative w-full">
                 <Link
                     href={`/manga/${manga.data.id}`}
