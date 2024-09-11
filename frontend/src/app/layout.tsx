@@ -23,11 +23,6 @@ export default function RootLayout({
                     "min-h-screen bg-background font-sans antialiased",
                 )}
             >
-                <Script
-                    async
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3511683752810096"
-                    crossOrigin="anonymous"
-                />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="dark"
