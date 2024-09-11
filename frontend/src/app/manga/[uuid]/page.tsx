@@ -41,8 +41,6 @@ export default function MangaPage({ params }: Props) {
     );
     const lastReadChapter = lastReadChapterCookie?.value;
 
-    console.log(lastReadChapter);
-
     return (
         <div className="my-4 sm:my-8 px-4 max-w-5xl mx-auto">
             <Suspense fallback={<MangaPageSkeleton />}>
