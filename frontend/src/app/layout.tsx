@@ -2,11 +2,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Header from "@/components/header";
+import Header from "@/components/header/header";
 import Footer from "@/components/footer";
-import Head from "next/head";
 import Script from "next/script";
 import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Hanami Manga",
+};
 
 export default function RootLayout({
     children,
