@@ -60,6 +60,7 @@ Make sure you have the following installed:
         DISCORD_CLIENT_ID= # Your Discord client ID. Can be found in `https://discord.com/developers/applications/ID/oauth2`
         DISCORD_CLIENT_SECRET= # Your Discord client secret. Can be found in `https://discord.com/developers/applications/ID/oauth2`
         NEXTAUTH_URL= # This will be the callback URL, `http://localhost:{PORT}` if you're in dev, and the url of the website if in prod.
+        NEXTAUTH_SECRET= # The secret code for auth, can get a new one by executing `openssl rand -hex 32`
         ```
 
 4. Install the front end dependencies:
