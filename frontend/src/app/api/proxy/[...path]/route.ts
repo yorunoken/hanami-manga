@@ -1,12 +1,17 @@
+import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-const forbiddenEndpoints = [];
+const forbiddenEndpoints = ["manga", "homeserver"];
 
 const backendPort = process.env.BACKEND_PORT;
 export async function GET(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const searchParams = request.nextUrl.searchParams;
     const path = pathname.replace("/api/proxy/", "");
+
+    if (forbiddenEndpoints.includes(path)) {
+        return notFound();
+    }
 
     const url = new URL(`http://localhost:${backendPort}/api/${path}`);
 
@@ -34,6 +39,10 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const path = pathname.replace("/api/proxy/", "");
+
+    if (forbiddenEndpoints.includes(path)) {
+        return notFound();
+    }
 
     const url = new URL(`http://localhost:${backendPort}/api/${path}`);
     console.log("proxying API url: " + url);
