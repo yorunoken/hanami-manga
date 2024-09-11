@@ -47,17 +47,19 @@ Make sure you have the following installed:
         - Rename `.env.example` to `.env`
         - Open `.env` and fill in your Discord bot token:
         ```
-        PORT=8000
         DATABASE_URL=sqlite://data.db
+        PORT=8000
         ```
 
     For the frontend:
         - Navigate to the `frontend` folder
         - Rename `.env.example` to `.env`
-        - The default configuration should work, but you can modify if needed:
         ```
         BACKEND_PORT=8000
         PORT=3000
+        DISCORD_CLIENT_ID= # Your Discord client ID. Can be found in `https://discord.com/developers/applications/ID/oauth2`
+        DISCORD_CLIENT_SECRET= # Your Discord client secret. Can be found in `https://discord.com/developers/applications/ID/oauth2`
+        NEXTAUTH_URL= # This will be the callback URL, `http://localhost:{PORT}` if you're in dev, and the url of the website if in prod.
         ```
 
 4. Install the front end dependencies:
