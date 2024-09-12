@@ -1,11 +1,4 @@
-import {
-    HeartIcon,
-    UserRound,
-    LogOut,
-    Settings,
-    Book,
-    LogIn,
-} from "lucide-react";
+import { HeartIcon, LogOut, Settings, Book, LogIn } from "lucide-react";
 import { signIn, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,7 +31,9 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { ErrorPreferences, Preferences } from "@/types/preferences";
 
 export function SignedInProfile({ session }: { session: Session }) {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -243,20 +238,126 @@ function AccountTab({ session }: { session: Session }) {
 }
 
 function PreferencesTab({ session }: { session: Session | null }) {
-    const [language, setLanguage] = useState("english");
-    const [readingView, setReadingView] = useState("continuous");
-    const [imageQuality, setImageQuality] = useState("high");
-    const [autoBookmark, setAutoBookmark] = useState(true);
-    const [showNSFW, setShowNSFW] = useState(false);
-    const [downloadToDevice, setDownloadToDevice] = useState(false);
+    const { toast } = useToast();
+
+    const [preferences, setPreferences] = useState<Preferences>({
+        language: "english",
+        readingView: "continuous",
+        imageQuality: "high",
+        autoBookmark: true,
+        showNSFW: false,
+    });
+
+    const [originalPreferences, setOriginalPreferences] = useState({
+        ...preferences,
+    });
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (session) {
+            fetchPreferences();
+            return;
+        }
+
+        setIsLoading(false);
+    }, [session]);
+
+    async function fetchPreferences() {
+        try {
+            setIsLoading(true);
+            const response = await fetch(`/api/user/preferences`);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch preferences");
+            }
+
+            const data: Preferences | ErrorPreferences = await response.json();
+
+            if (data === "") {
+                return;
+            }
+
+            setPreferences(data);
+            setOriginalPreferences(data);
+        } catch (error) {
+            console.error("Error fetching preferences:", error);
+            toast({
+                title: "Error",
+                description: "Failed to fetch preferences.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    function handlePreferenceChange(
+        key: keyof Preferences,
+        value: Preferences[keyof Preferences],
+    ) {
+        setPreferences((prev) => ({ ...prev, [key]: value }));
+    }
+
+    function hasChanges() {
+        return (
+            JSON.stringify(preferences) !== JSON.stringify(originalPreferences)
+        );
+    }
+
+    async function handleSave() {
+        if (!session) {
+            toast({
+                title: "Preferences",
+                description:
+                    "Saved changes locally, remember to login if you want the changes to persist.",
+            });
+            setOriginalPreferences({ ...preferences });
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/user/preferences", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(preferences),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to save preferences");
+            }
+
+            toast({
+                title: "Preferences",
+                description: "Saved changes to account.",
+            });
+            setOriginalPreferences({ ...preferences });
+        } catch (error) {
+            console.error("Error saving preferences:", error);
+            toast({
+                title: "Error",
+                description: "Failed to save preferences. Please try again.",
+                variant: "destructive",
+            });
+        }
+    }
+
+    if (isLoading) {
+        return <div>Loading preferences...</div>;
+    }
 
     return (
         <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
                 <CardTitle>Preferences</CardTitle>
-                <p className="text-xs text-muted-foreground">
-                    Note that these changes are local as you are not logged in.
-                </p>
+                {session === null && (
+                    <p className="text-xs text-muted-foreground">
+                        Note that these changes are local as you are not logged
+                        in.
+                    </p>
+                )}
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="space-y-4">
@@ -271,14 +372,19 @@ function PreferencesTab({ session }: { session: Session | null }) {
                             Choose the language for manga translations.
                         </p>
                     </div>
-                    <Select value={language} onValueChange={setLanguage}>
+                    <Select
+                        value={preferences.language}
+                        onValueChange={(value) =>
+                            handlePreferenceChange("language", value)
+                        }
+                    >
                         <SelectTrigger id="language">
                             <SelectValue placeholder="Select language" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="english">English</SelectItem>
                             <SelectItem value="japanese">Japanese</SelectItem>
-                            <SelectItem value="spanish">Spanish</SelectItem>
+                            <SelectItem value="turkish">Turkish</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -293,16 +399,14 @@ function PreferencesTab({ session }: { session: Session | null }) {
                         </p>
                     </div>
                     <RadioGroup
-                        value={readingView}
-                        onValueChange={setReadingView}
+                        value={preferences.readingView}
+                        onValueChange={(value) =>
+                            handlePreferenceChange("readingView", value)
+                        }
                     >
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="single" id="single" />
                             <Label htmlFor="single">Single Page</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="double" id="double" />
-                            <Label htmlFor="double">Double Page</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem
@@ -327,8 +431,10 @@ function PreferencesTab({ session }: { session: Session | null }) {
                         </p>
                     </div>
                     <RadioGroup
-                        value={imageQuality}
-                        onValueChange={setImageQuality}
+                        value={preferences.imageQuality}
+                        onValueChange={(value) =>
+                            handlePreferenceChange("imageQuality", value)
+                        }
                     >
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="low" id="low" />
@@ -356,8 +462,10 @@ function PreferencesTab({ session }: { session: Session | null }) {
                         </div>
                         <Switch
                             id="auto-bookmark"
-                            checked={autoBookmark}
-                            onCheckedChange={setAutoBookmark}
+                            checked={preferences.autoBookmark}
+                            onCheckedChange={(value) =>
+                                handlePreferenceChange("autoBookmark", value)
+                            }
                         />
                     </div>
                 </div>
@@ -378,32 +486,16 @@ function PreferencesTab({ session }: { session: Session | null }) {
                         </div>
                         <Switch
                             id="show-nsfw"
-                            checked={showNSFW}
-                            onCheckedChange={setShowNSFW}
+                            checked={preferences.showNSFW}
+                            onCheckedChange={(value) =>
+                                handlePreferenceChange("showNSFW", value)
+                            }
                         />
                     </div>
                 </div>
-
-                <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <div className="mr-2">
-                            <Label
-                                htmlFor="download-to-device"
-                                className="text-base font-semibold"
-                            >
-                                Download to Device
-                            </Label>
-                            <p className="text-sm text-muted-foreground">
-                                Save manga for offline reading.
-                            </p>
-                        </div>
-                        <Switch
-                            id="download-to-device"
-                            checked={downloadToDevice}
-                            onCheckedChange={setDownloadToDevice}
-                        />
-                    </div>
-                </div>
+                <Button onClick={handleSave} disabled={!hasChanges()}>
+                    Save Changes
+                </Button>
             </CardContent>
         </Card>
     );

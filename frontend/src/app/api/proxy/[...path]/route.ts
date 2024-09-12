@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
-const forbiddenEndpoints = ["manga", "homeserver"];
+const forbiddenEndpoints = ["manga", "homeserver", "user/preferences"];
 
 const backendPort = process.env.BACKEND_PORT;
 export async function GET(request: NextRequest) {
