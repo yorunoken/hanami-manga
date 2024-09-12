@@ -8,6 +8,15 @@ const handler = NextAuth({
             clientSecret: process.env.DISCORD_CLIENT_SECRET!,
         }),
     ],
+    callbacks: {
+        session: ({ session, token }) => ({
+            ...session,
+            user: {
+                ...session.user,
+                id: token.sub,
+            },
+        }),
+    },
     secret: process.env.NEXTAUTH_SECRET,
 });
 
