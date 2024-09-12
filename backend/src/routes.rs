@@ -1,12 +1,17 @@
 use std::collections::HashMap;
 
-use crate::api;
+use crate::{
+    api::{self, get_preferences, insert_preferences},
+    database::with_db,
+};
 use sqlx::SqlitePool;
-use warp::Filter;
+use warp::{body::json, Filter};
 
 pub fn routes(
     pool: SqlitePool,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    // GET routes
+
     let get_manga = warp::path!("api" / "manga" / String)
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
@@ -46,6 +51,20 @@ pub fn routes(
         .and(warp::get())
         .map(|| warp::reply::json(&1));
 
+    let get_preferences = warp::path!("api" / "user" / "preferences")
+        .and(warp::get())
+        .and(warp::query::<HashMap<String, String>>())
+        .and(with_db(pool.clone()))
+        .and_then(get_preferences);
+
+    // POST routes
+
+    let insert_preferences = warp::path!("api" / "user" / "preferences")
+        .and(warp::post())
+        .and(json())
+        .and(with_db(pool.clone()))
+        .and_then(insert_preferences);
+
     get_manga
         .or(proxy_image)
         .or(health_check)
@@ -54,4 +73,6 @@ pub fn routes(
         .or(get_chapter)
         .or(get_chapter_collection)
         .or(at_home_server)
+        .or(insert_preferences)
+        .or(get_preferences)
 }

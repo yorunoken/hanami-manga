@@ -4,17 +4,66 @@ use mangadex_api_schema_rust::v5::{
     AtHomeServer, ChapterCollection, ChapterData, MangaAggregate, MangaCollection, MangaData,
 };
 use reqwest::header::{CONTENT_TYPE, USER_AGENT};
-use serde::{Deserialize, Serialize};
-use warp::{http::Response, hyper::Body, Rejection, Reply};
+use sqlx::{Row, SqlitePool};
+use warp::{
+    http::{Response, StatusCode},
+    hyper::Body,
+    Rejection, Reply,
+};
 
-use crate::request;
+use crate::{
+    models::{Message, Preferences},
+    request,
+};
 
 const MANGADEX_API: &str = "https://api.mangadex.org";
 
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct Error {
-    text: String,
-    cat: String,
+// GET routes
+
+pub async fn get_preferences(
+    query: HashMap<String, String>,
+    pool: SqlitePool,
+) -> Result<impl Reply, Rejection> {
+    let discord_id = match query.get("id") {
+        None => return Err(warp::reject::not_found()),
+        Some(s) => s,
+    };
+
+    let rows = sqlx::query(&"SELECT * FROM users WHERE discord_id = ?")
+        .bind(discord_id)
+        .fetch_all(&pool)
+        .await
+        .map_err(|e| {
+            eprintln!("failed to get query: {e}");
+            warp::reject::not_found()
+        })?;
+
+    if rows.is_empty() {
+        println!("empty rows");
+        Ok(warp::reply::with_status(
+            warp::reply::json(&Message {
+                message: "Empty rows.".to_string(),
+            }),
+            StatusCode::OK,
+        ))
+    } else {
+        let users: Vec<Preferences> = rows
+            .iter()
+            .map(|row| Preferences {
+                discord_id: row.get("discord_id"),
+                auto_bookmark: row.get("auto_bookmark"),
+                image_quality: row.get("image_quality"),
+                language: row.get("language"),
+                reading_view: row.get("reading_view"),
+                show_nsfw: row.get("show_nsfw"),
+            })
+            .collect();
+
+        Ok(warp::reply::with_status(
+            warp::reply::json(&users),
+            StatusCode::OK,
+        ))
+    }
 }
 
 pub async fn get_manga_collection(query: HashMap<String, String>) -> Result<impl Reply, Rejection> {
@@ -97,4 +146,41 @@ pub async fn at_home_server(
 ) -> Result<impl Reply, Rejection> {
     let full_url = format!("{}/at-home/server/{}", MANGADEX_API, uuid);
     Ok(request::json::<AtHomeServer>(full_url, query).await)
+}
+
+// POST routes
+
+pub async fn insert_preferences(
+    request: Preferences,
+    pool: SqlitePool,
+) -> Result<impl Reply, Rejection> {
+    let Preferences {
+        discord_id,
+        show_nsfw,
+        reading_view,
+        language,
+        image_quality,
+        auto_bookmark,
+    } = request;
+
+    sqlx::query!(
+        "INSERT OR REPLACE INTO users (discord_id, language, reading_view, image_quality, auto_bookmark, show_nsfw) VALUES (?, ?, ?, ?, ?, ?)",
+        discord_id,
+        language,
+        reading_view,
+        image_quality,
+        auto_bookmark,
+        show_nsfw
+    )
+    .execute(&pool)
+    .await
+    .map_err(|e| {
+        eprintln!("Failed to insert feedback: {:?}", e);
+        warp::reject::reject()
+    })?;
+
+    Ok(warp::reply::with_status(
+        "Added preferences to database",
+        StatusCode::OK,
+    ))
 }
