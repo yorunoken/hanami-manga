@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { ErrorPreferences, Preferences } from "@/types/preferences";
+import { Preferences } from "@/types/preferences";
 import { BACKEND_URL } from "@/lib";
 import { authOptions } from "@/lib/auth";
 
@@ -55,11 +55,7 @@ export async function GET(req: NextRequest) {
         );
     }
 
-    const preferenceData: Array<Preferences> | ErrorPreferences =
-        await response.json();
+    const preferenceData: Array<Preferences> = await response.json();
 
-    return NextResponse.json(
-        Array.isArray(preferenceData) ? preferenceData[0] : preferenceData,
-        { status: 200 },
-    );
+    return NextResponse.json(preferenceData, { status: 200 });
 }

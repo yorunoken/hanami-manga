@@ -5,5 +5,3 @@ export interface Preferences {
     autoBookmark: boolean;
     showNSFW: boolean;
 }
-
-export type ErrorPreferences = "";

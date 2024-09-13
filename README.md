@@ -45,9 +45,10 @@ Make sure you have the following installed:
     For the backend:
         - Navigate to the `backend` folder
         - Rename `.env.example` to `.env`
-        - Open `.env` and fill in your Discord bot token:
+        - Open `.env` and fill it in:
         ```
-        DATABASE_URL=sqlite://data.db
+        LIBSQL_URL=
+        LIBSQL_TOKEN=
         PORT=8000
         ```
 

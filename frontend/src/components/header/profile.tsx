@@ -33,7 +33,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { ErrorPreferences, Preferences } from "@/types/preferences";
+import { Preferences } from "@/types/preferences";
 
 export function SignedInProfile({ session }: { session: Session }) {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -272,9 +272,9 @@ function PreferencesTab({ session }: { session: Session | null }) {
                 throw new Error("Failed to fetch preferences");
             }
 
-            const data: Preferences | ErrorPreferences = await response.json();
+            const data: Preferences | undefined = (await response.json())[0];
 
-            if (data === "") {
+            if (typeof data === "undefined") {
                 return;
             }
 
