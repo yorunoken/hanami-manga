@@ -4,11 +4,11 @@ use crate::{
     api::{self, get_preferences, insert_preferences},
     database::with_db,
 };
-use sqlx::SqlitePool;
+use libsql::Connection;
 use warp::{body::json, Filter};
 
 pub fn routes(
-    pool: SqlitePool,
+    db: Connection,
 ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
     // GET routes
 
@@ -54,7 +54,7 @@ pub fn routes(
     let get_preferences = warp::path!("api" / "user" / "preferences")
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and(with_db(pool.clone()))
+        .and(with_db(db.clone()))
         .and_then(get_preferences);
 
     // POST routes
@@ -62,7 +62,7 @@ pub fn routes(
     let insert_preferences = warp::path!("api" / "user" / "preferences")
         .and(warp::post())
         .and(json())
-        .and(with_db(pool.clone()))
+        .and(with_db(db.clone()))
         .and_then(insert_preferences);
 
     get_manga
