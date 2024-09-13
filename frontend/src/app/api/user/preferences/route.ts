@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { ErrorPreferences, Preferences } from "@/types/preferences";
 import { BACKEND_URL } from "@/lib";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions);
