@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
+use libsql::{params, Connection};
 use mangadex_api_schema_rust::v5::{
     AtHomeServer, ChapterCollection, ChapterData, MangaAggregate, MangaCollection, MangaData,
 };
 use reqwest::header::{CONTENT_TYPE, USER_AGENT};
-use sqlx::{Row, SqlitePool};
 use warp::{
     http::{Response, StatusCode},
     hyper::Body,
@@ -22,48 +22,62 @@ const MANGADEX_API: &str = "https://api.mangadex.org";
 
 pub async fn get_preferences(
     query: HashMap<String, String>,
-    pool: SqlitePool,
+    db: Connection,
 ) -> Result<impl Reply, Rejection> {
+    // Reset the db??
+    db.reset().await;
+
     let discord_id = match query.get("id") {
-        None => return Err(warp::reject::not_found()),
+        None => {
+            return Ok(warp::reply::with_status(
+                warp::reply::json(&Message {
+                    message: format!("The parameter `id` was not found in request."),
+                }),
+                StatusCode::BAD_REQUEST,
+            ))
+        }
         Some(s) => s,
     };
 
-    let rows = sqlx::query(&"SELECT * FROM users WHERE discord_id = ?")
-        .bind(discord_id)
-        .fetch_all(&pool)
+    let mut rows = match db
+        .query(
+            "SELECT * FROM users WHERE discord_id = ?",
+            params![discord_id.clone()],
+        )
         .await
-        .map_err(|e| {
-            eprintln!("failed to get query: {e}");
-            warp::reject::not_found()
-        })?;
+    {
+        Ok(rows) => rows,
+        Err(e) => {
+            eprintln!("failed to get query: {}", e);
+            return Ok(warp::reply::with_status(
+                warp::reply::json(&Message {
+                    message: format!("failed to get query: {}", e),
+                }),
+                StatusCode::INTERNAL_SERVER_ERROR,
+            ));
+        }
+    };
 
-    if rows.is_empty() {
-        println!("empty rows");
-        Ok(warp::reply::with_status(
-            warp::reply::json(&Message {
-                message: "Empty rows.".to_string(),
+    let mut users = Vec::new();
+
+    while let Ok(row) = rows.next().await {
+        match row {
+            None => break,
+            Some(row) => users.push(Preferences {
+                discord_id: row.get(0).map_err(|_| warp::reject::reject())?,
+                language: row.get(1).map_err(|_| warp::reject::reject())?,
+                reading_view: row.get(2).map_err(|_| warp::reject::reject())?,
+                image_quality: row.get(3).map_err(|_| warp::reject::reject())?,
+                auto_bookmark: row.get(4).map_err(|_| warp::reject::reject())?,
+                show_nsfw: row.get(5).map_err(|_| warp::reject::reject())?,
             }),
-            StatusCode::OK,
-        ))
-    } else {
-        let users: Vec<Preferences> = rows
-            .iter()
-            .map(|row| Preferences {
-                discord_id: row.get("discord_id"),
-                auto_bookmark: row.get("auto_bookmark"),
-                image_quality: row.get("image_quality"),
-                language: row.get("language"),
-                reading_view: row.get("reading_view"),
-                show_nsfw: row.get("show_nsfw"),
-            })
-            .collect();
-
-        Ok(warp::reply::with_status(
-            warp::reply::json(&users),
-            StatusCode::OK,
-        ))
+        }
     }
+
+    Ok(warp::reply::with_status(
+        warp::reply::json(&users),
+        StatusCode::OK,
+    ))
 }
 
 pub async fn get_manga_collection(query: HashMap<String, String>) -> Result<impl Reply, Rejection> {
@@ -152,8 +166,11 @@ pub async fn at_home_server(
 
 pub async fn insert_preferences(
     request: Preferences,
-    pool: SqlitePool,
+    db: Connection,
 ) -> Result<impl Reply, Rejection> {
+    // Reset the db??
+    db.reset().await;
+
     let Preferences {
         discord_id,
         show_nsfw,
@@ -163,24 +180,33 @@ pub async fn insert_preferences(
         auto_bookmark,
     } = request;
 
-    sqlx::query!(
-        "INSERT OR REPLACE INTO users (discord_id, language, reading_view, image_quality, auto_bookmark, show_nsfw) VALUES (?, ?, ?, ?, ?, ?)",
-        discord_id,
-        language,
-        reading_view,
-        image_quality,
-        auto_bookmark,
-        show_nsfw
-    )
-    .execute(&pool)
-    .await
-    .map_err(|e| {
-        eprintln!("Failed to insert feedback: {:?}", e);
-        warp::reject::reject()
-    })?;
+    match db
+        .query(
+            "INSERT OR REPLACE INTO users (discord_id, language, reading_view, image_quality, auto_bookmark, show_nsfw) VALUES (?, ?, ?, ?, ?, ?)",
+            params![discord_id, language,
+                reading_view,
+                image_quality,
+                auto_bookmark,
+                show_nsfw],
+        )
+        .await
+    {
+        Ok(rows) => rows,
+        Err(e) => {
+            eprintln!("failed to get query: {}", e);
+            return Ok(warp::reply::with_status(
+                warp::reply::json(&Message {
+                    message: format!("failed to get query: {}", e),
+                }),
+                StatusCode::INTERNAL_SERVER_ERROR,
+            ));
+        }
+    };
 
     Ok(warp::reply::with_status(
-        "Added preferences to database",
+        warp::reply::json(&Message {
+            message: "Added preferences to database.".to_string(),
+        }),
         StatusCode::OK,
     ))
 }
