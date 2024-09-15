@@ -7,7 +7,6 @@ import { SessionProvider } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer";
-import { Metadata } from "next";
 
 export default function RootLayout({
     children,
