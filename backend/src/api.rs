@@ -12,7 +12,7 @@ use warp::{
 };
 
 use crate::{
-    models::{Message, Preferences},
+    models::{Message, Preferences, PreferencesReturn},
     request,
 };
 
@@ -20,24 +20,9 @@ const MANGADEX_API: &str = "https://api.mangadex.org";
 
 // GET routes
 
-pub async fn get_preferences(
-    query: HashMap<String, String>,
-    db: Connection,
-) -> Result<impl Reply, Rejection> {
+pub async fn get_preferences(discord_id: String, db: Connection) -> Result<impl Reply, Rejection> {
     // Reset the db??
     db.reset().await;
-
-    let discord_id = match query.get("id") {
-        None => {
-            return Ok(warp::reply::with_status(
-                warp::reply::json(&Message {
-                    message: format!("The parameter `id` was not found in request."),
-                }),
-                StatusCode::BAD_REQUEST,
-            ))
-        }
-        Some(s) => s,
-    };
 
     let mut rows = match db
         .query(
@@ -63,7 +48,7 @@ pub async fn get_preferences(
     while let Ok(row) = rows.next().await {
         match row {
             None => break,
-            Some(row) => users.push(Preferences {
+            Some(row) => users.push(PreferencesReturn {
                 discord_id: row.get(0).map_err(|_| warp::reject::reject())?,
                 language: row.get(1).map_err(|_| warp::reject::reject())?,
                 reading_view: row.get(2).map_err(|_| warp::reject::reject())?,
@@ -165,6 +150,7 @@ pub async fn at_home_server(
 // POST routes
 
 pub async fn insert_preferences(
+    discord_id: String,
     request: Preferences,
     db: Connection,
 ) -> Result<impl Reply, Rejection> {
@@ -172,7 +158,6 @@ pub async fn insert_preferences(
     db.reset().await;
 
     let Preferences {
-        discord_id,
         show_nsfw,
         reading_view,
         language,

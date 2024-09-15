@@ -13,16 +13,16 @@ export async function POST(req: NextRequest) {
 
     const preferences: Preferences = await req.json();
 
-    const response = await fetch(`${BACKEND_URL}/api/user/preferences`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    const response = await fetch(
+        `${BACKEND_URL}/api/user/${session.user?.id}/preferences`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(preferences),
         },
-        body: JSON.stringify({
-            ...preferences,
-            discordId: session.user?.id.toString(),
-        }),
-    });
+    );
 
     if (!response.ok) {
         return NextResponse.json(
@@ -45,7 +45,7 @@ export async function GET() {
     }
 
     const response = await fetch(
-        `${BACKEND_URL}/api/user/preferences?id=${session.user?.id}`,
+        `${BACKEND_URL}/api/user/${session.user?.id}/preferences`,
     );
 
     if (!response.ok) {

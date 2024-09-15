@@ -51,15 +51,14 @@ pub fn routes(
         .and(warp::get())
         .map(|| warp::reply::json(&1));
 
-    let get_preferences = warp::path!("api" / "user" / "preferences")
+    let get_preferences = warp::path!("api" / "user" / String / "preferences")
         .and(warp::get())
-        .and(warp::query::<HashMap<String, String>>())
         .and(with_db(db.clone()))
         .and_then(get_preferences);
 
     // POST routes
 
-    let insert_preferences = warp::path!("api" / "user" / "preferences")
+    let insert_preferences = warp::path!("api" / "user" / String / "preferences")
         .and(warp::post())
         .and(json())
         .and(with_db(db.clone()))
