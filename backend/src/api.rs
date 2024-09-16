@@ -26,7 +26,7 @@ pub async fn get_preferences(discord_id: String, db: Connection) -> Result<impl 
 
     let mut rows = match db
         .query(
-            "SELECT * FROM users WHERE discord_id = ?",
+            "SELECT * FROM preferences WHERE discord_id = ?",
             params![discord_id.clone()],
         )
         .await
@@ -167,7 +167,7 @@ pub async fn insert_preferences(
 
     match db
         .query(
-            "INSERT OR REPLACE INTO users (discord_id, language, reading_view, image_quality, auto_bookmark, show_nsfw) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO preferences (discord_id, language, reading_view, image_quality, auto_bookmark, show_nsfw) VALUES (?, ?, ?, ?, ?, ?)",
             params![discord_id, language,
                 reading_view,
                 image_quality,
