@@ -1,8 +1,8 @@
 mod api;
 mod database;
 mod models;
+mod paths;
 mod request;
-mod routes;
 
 use dotenvy::dotenv;
 use std::env;
@@ -13,7 +13,7 @@ async fn main() {
     dotenv().ok();
 
     let pool = database::create_pool().await;
-    let api = routes::routes(pool);
+    let api = paths::routes(pool);
 
     let port: u16 = env::var("PORT")
         .expect("Expected PORT to be defined in environment.")

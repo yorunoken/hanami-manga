@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use crate::{
-    api::{self, get_preferences, insert_preferences},
+    api::{get, post},
     database::with_db,
 };
 use libsql::Connection;
@@ -15,46 +15,47 @@ pub fn routes(
     let get_manga = warp::path!("api" / "manga" / String)
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::get_manga);
+        .and_then(get::get_manga);
 
     let get_manga_collection = warp::path!("api" / "manga")
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::get_manga_collection);
+        .and_then(get::get_manga_collection);
 
     let get_manga_aggregate = warp::path!("api" / "manga" / String / "aggregate")
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::get_manga_aggregate);
+        .and_then(get::get_manga_aggregate);
 
     let get_chapter = warp::path!("api" / "chapter" / String)
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::get_chapter);
+        .and_then(get::get_chapter);
 
     let get_chapter_collection = warp::path!("api" / "chapter")
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::get_chapter_collection);
+        .and_then(get::get_chapter_collection);
 
     let at_home_server = warp::path!("api" / "homeserver" / String)
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::at_home_server);
+        .and_then(get::at_home_server);
 
     let proxy_image = warp::path!("api" / "proxyimage")
         .and(warp::get())
         .and(warp::query::<HashMap<String, String>>())
-        .and_then(api::proxy_image);
-
-    let health_check = warp::path!("api" / "health")
-        .and(warp::get())
-        .map(|| warp::reply::json(&1));
+        .and_then(get::proxy_image);
 
     let get_preferences = warp::path!("api" / "user" / String / "preferences")
         .and(warp::get())
         .and(with_db(db.clone()))
-        .and_then(get_preferences);
+        .and_then(get::user_preferences);
+
+    let get_user_details = warp::path!("api" / "user" / String / "details")
+        .and(warp::get())
+        .and(with_db(db.clone()))
+        .and_then(get::user_details);
 
     // POST routes
 
@@ -62,11 +63,10 @@ pub fn routes(
         .and(warp::post())
         .and(json())
         .and(with_db(db.clone()))
-        .and_then(insert_preferences);
+        .and_then(post::insert_preferences);
 
     get_manga
         .or(proxy_image)
-        .or(health_check)
         .or(get_manga_collection)
         .or(get_manga_aggregate)
         .or(get_chapter)
@@ -74,4 +74,5 @@ pub fn routes(
         .or(at_home_server)
         .or(insert_preferences)
         .or(get_preferences)
+        .or(get_user_details)
 }

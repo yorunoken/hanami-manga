@@ -272,7 +272,7 @@ function PreferencesTab({ session }: { session: Session | null }) {
                 throw new Error("Failed to fetch preferences");
             }
 
-            const data: Preferences | undefined = (await response.json())[0];
+            const data: Preferences | undefined = await response.json();
 
             if (typeof data === "undefined") {
                 return;

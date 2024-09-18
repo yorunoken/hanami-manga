@@ -55,7 +55,7 @@ export async function GET() {
         );
     }
 
-    const preferenceData: Array<Preferences> = await response.json();
+    const preferenceData: Preferences = await response.json();
 
     return NextResponse.json(preferenceData, { status: 200 });
 }
