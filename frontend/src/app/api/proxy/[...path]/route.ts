@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
         return notFound();
     }
 
-    const url = new URL(`http://localhost:${backendPort}/api/${path}`);
+    const url = new URL(`http://127.0.0.1:${backendPort}/api/${path}`);
 
     searchParams.forEach((value, key) => {
         url.searchParams.append(key, value);
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         return notFound();
     }
 
-    const url = new URL(`http://localhost:${backendPort}/api/${path}`);
+    const url = new URL(`http://127.0.0.1:${backendPort}/api/${path}`);
     console.log("proxying API url: " + url);
 
     const response = await fetch(url, {

@@ -83,7 +83,7 @@ Make sure you have the following installed:
    bun run start
    ```
 
-2. Open your browser and navigate to `http://localhost:PORT` to see Hanami Manga in action!
+2. Open your browser and navigate to `http://127.0.0.1:PORT` to see Hanami Manga in action!
 
 ## Deployment
 

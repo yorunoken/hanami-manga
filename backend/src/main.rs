@@ -20,6 +20,6 @@ async fn main() {
         .parse()
         .expect("PORT is not a number!");
 
-    println!("Server started at http://localhost:{port}");
+    println!("Server started at http://127.0.0.1:{port}");
     warp::serve(api).run(([127, 0, 0, 1], port)).await;
 }
